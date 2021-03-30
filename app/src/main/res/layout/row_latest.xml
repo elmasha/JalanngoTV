@@ -16,8 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-
-
                 <ImageView
                     android:id="@+id/news_image"
                     android:layout_width="340dp"
@@ -86,6 +84,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60dp" />
 
+                <TextView
+                    android:id="@+id/news_story"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="story"
+                    android:visibility="gone"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/lightgray"
+                    android:textSize="15dp"
+                    />
 
 
 
@@ -104,16 +113,7 @@
             android:layout_marginLeft="10dp">
 
 
-            <TextView
-                android:id="@+id/news_story"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="story"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="@color/lightgray"
-                android:textSize="15dp"
-                />
+
 
             <LinearLayout
                 android:layout_width="wrap_content"

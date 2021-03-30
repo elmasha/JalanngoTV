@@ -13,11 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.Transaction;
 
 import el.com.jalangotv.Adapters.NewsAdapter;
 import el.com.jalangotv.Adapters.SearchNewsAdapter;
@@ -76,6 +81,7 @@ View root;
                     toVendorPref.putExtra("Image", image);
                     toVendorPref.putExtra("doc_ID", doc_id);
                     startActivity(toVendorPref);
+                    viewsCount(doc_id);
                 }
             }
         });
@@ -84,6 +90,38 @@ View root;
         }
     //...end fetch..
 
+    //----Likes count
+    private void viewsCount(String doc_Id){
+
+        final DocumentReference sfDocRef = db.collection("News").document(doc_Id);
+
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(sfDocRef);
+
+                // Note: this could be done without a transaction
+                //       by updating the population using FieldValue.increment()
+                double newPopulation = snapshot.getLong("viewsCount") + 1;
+                transaction.update(sfDocRef, "viewsCount", newPopulation);
+
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+    }
+    ///___end likes
 
     @Override
     public void onStart() {

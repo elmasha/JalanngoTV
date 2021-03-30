@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment {
                     model.setCommentCount(sliderData.getCommentCount());
                     model.setCategory(sliderData.getCategory());
                     model.setViewsCount(sliderData.getViewsCount());
+                    model.setDoc_ID(sliderData.getDoc_ID());
 
                     // after that we are adding that
                     // data inside our array list.
@@ -151,7 +152,8 @@ public class HomeFragment extends Fragment {
     ///_____ImageSlider end
 
 
-    private void likesCount (String doc_Id){
+    //----Likes count
+    private void viewsCount(String doc_Id){
 
         final DocumentReference sfDocRef = db.collection("News").document(doc_Id);
 
@@ -181,7 +183,7 @@ public class HomeFragment extends Fragment {
         });
 
     }
-
+    ///___end likes
 
     //----Fetch LatestNews--
     private void FetchLatestNews() {
@@ -220,7 +222,7 @@ public class HomeFragment extends Fragment {
                     toVendorPref.putExtra("Image",image);
                     toVendorPref.putExtra("doc_ID",Doc_Id);
                     startActivity(toVendorPref);
-                likesCount(Doc_Id);
+                viewsCount(Doc_Id);
                 }
 
             }
@@ -265,7 +267,7 @@ public class HomeFragment extends Fragment {
                     tonews.putExtra("Image",image);
                     tonews.putExtra("doc_ID",Doc_Id2);
                     startActivity(tonews);
-                    likesCount(Doc_Id2);
+                    viewsCount(Doc_Id2);
                 }
 
             }

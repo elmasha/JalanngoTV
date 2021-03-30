@@ -3,8 +3,8 @@ package el.com.jalangotv.Activities.ui.categories;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,13 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.Transaction;
 
-import el.com.jalangotv.Adapters.NewsAdapter;
 import el.com.jalangotv.Adapters.SavedAdapter;
 import el.com.jalangotv.R;
 import el.com.jalangotv.ViewNewsActivity;
@@ -82,11 +86,48 @@ View root;
                     toVendorPref.putExtra("Image",image);
                     toVendorPref.putExtra("doc_ID",doc_id);
                     startActivity(toVendorPref);
+                    //viewsCount(doc_id);
                 }
             }
         });
     }
     //...end fetch..
+
+
+
+    //----Likes count
+    private void viewsCount(String doc_Id){
+
+        final DocumentReference sfDocRef = db.collection("News").document(doc_Id);
+
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(sfDocRef);
+
+                // Note: this could be done without a transaction
+                //       by updating the population using FieldValue.increment()
+                double newPopulation = snapshot.getLong("viewsCount") + 1;
+                transaction.update(sfDocRef, "viewsCount", newPopulation);
+
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+    }
+    ///___end likes
+
 
 
     @Override

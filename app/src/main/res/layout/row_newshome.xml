@@ -45,23 +45,48 @@
                         android:layout_width="150dp"
                         android:ellipsize="end"
                         android:maxLines="4"
-                        android:layout_margin="4dp"
+                        android:layout_marginTop="4dp"
                         android:minLines="2"
                         android:text="TextView"
                         android:textColor="@color/lightgray"
                         android:layout_height="wrap_content"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:id="@+id/home_category"
-                        android:textStyle="normal"
-                        android:text=""
-                        android:textColor="@color/orange"
-                        android:layout_height="wrap_content"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="8dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/home_category"
+                            android:textStyle="normal"
+                            android:text=""
+                            android:textColor="@color/orange"
+                            android:layout_height="wrap_content"/>
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/news_date"
+                            android:text=""
+                            android:textColor="@color/gray"
+                            android:textSize="12dp"
+                            android:layout_gravity="right"
+                            android:layout_marginStart="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="90dp" />
+
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
@@ -86,7 +111,7 @@
                                 android:id="@+id/likes_count_news"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=" 0 "
+                                android:text="  0  "
                                 android:drawableLeft="@drawable/likes"
                                 android:textStyle="bold"
                                 android:textColor="@color/orange"
@@ -99,7 +124,7 @@
                                 android:layout_width="wrap_content"
                                 android:drawableLeft="@drawable/eye"
                                 android:layout_height="wrap_content"
-                                android:text=" 0 "
+                                android:text="  0 "
                                 android:textStyle="bold"
                                 android:textColor="@color/orange"
                                 android:textSize="17dp"
@@ -107,15 +132,7 @@
 
                         </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/news_date"
-                            android:text=""
-                            android:textColor="@color/gray"
-                            android:textSize="12dp"
-                            android:layout_marginStart="13dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp" />
+
                     </LinearLayout>
 
                 </LinearLayout>

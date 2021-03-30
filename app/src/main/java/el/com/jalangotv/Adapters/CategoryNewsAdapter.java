@@ -54,7 +54,7 @@ public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, Category
 //        String date = DateFormat.format("dd-MMM-yyyy | hh:mm a",new Date(milisecond)).toString();
 //
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        holder.date.setText(getTimeAgo(milisecond));
+        holder.date.setText(getTimeAgo(model.getTimestamp().getTime()));
 
 
 

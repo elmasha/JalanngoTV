@@ -68,6 +68,8 @@ dependencies {
 
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
 
+    implementation 'com.github.shamalka:Pretty-TimeAgo-android-library:1.0.0'
+
     //CircleImage...
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 

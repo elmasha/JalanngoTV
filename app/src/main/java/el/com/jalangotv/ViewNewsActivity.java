@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -29,6 +30,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import el.com.jalangotv.Activities.DashboardActivity;
+import el.com.jalangotv.Activities.ui.home.HomeFragment;
+import el.com.jalangotv.Fragment.CommentsFragment;
 import el.com.jalangotv.models.News;
 
 import static java.security.AccessController.getContext;
@@ -38,10 +42,14 @@ public class ViewNewsActivity extends AppCompatActivity {
     private TextView headline,Story,title,likeCount,commentCount,shareCount,viewsCount;
     private ImageView new_image;
     private String Doc_Id;
+    private long backPressedTime;
+    private long CallPressedTime;
+    private Toast backToast;
     private FloatingActionButton like,comment,share,save;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference newsRef = db.collection("News");
     CollectionReference SavedNewsRef = db.collection("SavedNews");
+    private int commentState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +61,26 @@ public class ViewNewsActivity extends AppCompatActivity {
         new_image = findViewById(R.id.view_image);
         save= findViewById(R.id.fab_save);
         like = findViewById(R.id.fab_like);
+        comment = findViewById(R.id.fab_comment);
         likeCount = findViewById(R.id.like_view_count);
         commentCount = findViewById(R.id.comment_view_count);
         viewsCount = findViewById(R.id.eye_view_count);
 
 
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (commentState == 0){
+                    commentState =1;
+                    getSupportFragmentManager().beginTransaction().add(R.id.comment_fragmentHost,new
+                            CommentsFragment()).commit();
+                }else if (commentState == 1){
+
+                    getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
+                }
+
+            }
+        });
 
         like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,6 +238,29 @@ public class ViewNewsActivity extends AppCompatActivity {
             });
         }
 
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            super.onBackPressed();
+            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+            finish();
+            return;
+        } else {
+
+            if (commentState == 1){
+                commentState =0;
+                getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
+            }
+        }
+
+        backPressedTime = System.currentTimeMillis();
 
     }
 }

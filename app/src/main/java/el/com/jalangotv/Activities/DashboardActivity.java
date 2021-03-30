@@ -92,7 +92,8 @@ public class DashboardActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new
-                HomeFragment()).commit(); if(!hasPermissions(this, PERMISSIONS)){
+                HomeFragment()).commit();
+        if(!hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
@@ -194,6 +195,7 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new
                     HomeFragment()).commit();
+            layoutCategory.setVisibility(View.VISIBLE);
             backToast = Toast.makeText(getBaseContext(), "Double tap to exit", Toast.LENGTH_SHORT);
             backToast.show();
         }

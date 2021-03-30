@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.snov.timeagolibrary.PrettyTimeAgo;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -29,8 +31,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import el.com.jalangotv.R;
+import el.com.jalangotv.TimeAgo2;
 import el.com.jalangotv.models.News;
 
 public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.NewsViewHolder> {
@@ -60,16 +64,9 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 
-        holder.date.setText(getTimeAgo(milisecond));
-
 
 //        Date datemilisec = DateTimeUtils.formatDate(milisecond, DateTimeUnits.SECONDS);
 //        String timeAgo = DateTimeUtils.getTimeAgo(context,datemilisec, DateTimeStyle.AGO_SHORT_STRING );
-//
-//        holder.date.setText(timeAgo);
-
-
-
 
 
 
@@ -143,74 +140,51 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
     }
 
 
-    public static String getTimeAgo(long timestamp) {
+    public String covertTimeToText(String dataDate) {
 
-        Calendar cal = Calendar.getInstance();
-        TimeZone tz = cal.getTimeZone();//get your local time zone.
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-        sdf.setTimeZone(tz);//set time zone.
-        String localTime = sdf.format(new Date(timestamp * 1000));
-        Date date = new Date();
+        String convTime = null;
+
+        String prefix = "";
+        String suffix = "Ago";
+
         try {
-            date = sdf.parse(localTime);//get local date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date pasTime = dateFormat.parse(dataDate);
+
+            Date nowTime = new Date();
+
+            long dateDiff = nowTime.getTime() - pasTime.getTime();
+
+            long second = TimeUnit.MILLISECONDS.toSeconds(dateDiff);
+            long minute = TimeUnit.MILLISECONDS.toMinutes(dateDiff);
+            long hour   = TimeUnit.MILLISECONDS.toHours(dateDiff);
+            long day  = TimeUnit.MILLISECONDS.toDays(dateDiff);
+
+            if (second < 60) {
+                convTime = second + " Seconds " + suffix;
+            } else if (minute < 60) {
+                convTime = minute + " Minutes "+suffix;
+            } else if (hour < 24) {
+                convTime = hour + " Hours "+suffix;
+            } else if (day >= 7) {
+                if (day > 360) {
+                    convTime = (day / 360) + " Years " + suffix;
+                } else if (day > 30) {
+                    convTime = (day / 30) + " Months " + suffix;
+                } else {
+                    convTime = (day / 7) + " Week " + suffix;
+                }
+            } else if (day < 7) {
+                convTime = day+" Days "+suffix;
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
+            Log.e("ConvTimeE", e.getMessage());
         }
 
-        if(date == null) {
-            return null;
-        }
-
-        long time = date.getTime();
-
-        Date curDate = currentDate();
-        long now = curDate.getTime();
-        if (time > now || time <= 0) {
-            return null;
-        }
-
-        int timeDIM = getTimeDistanceInMinutes(time);
-
-        String timeAgo = null;
-
-        if (timeDIM == 0) {
-            timeAgo = "less than a minute";
-        } else if (timeDIM == 1) {
-            return "1 minute";
-        } else if (timeDIM >= 2 && timeDIM <= 44) {
-            timeAgo = timeDIM + " minutes";
-        } else if (timeDIM >= 45 && timeDIM <= 89) {
-            timeAgo = "about an hour";
-        } else if (timeDIM >= 90 && timeDIM <= 1439) {
-            timeAgo = "about " + (Math.round(timeDIM / 60)) + " hours";
-        } else if (timeDIM >= 1440 && timeDIM <= 2519) {
-            timeAgo = "1 day";
-        } else if (timeDIM >= 2520 && timeDIM <= 43199) {
-            timeAgo = (Math.round(timeDIM / 1440)) + " days";
-        } else if (timeDIM >= 43200 && timeDIM <= 86399) {
-            timeAgo = "about a month";
-        } else if (timeDIM >= 86400 && timeDIM <= 525599) {
-            timeAgo = (Math.round(timeDIM / 43200)) + " months";
-        } else if (timeDIM >= 525600 && timeDIM <= 655199) {
-            timeAgo = "about a year";
-        } else if (timeDIM >= 655200 && timeDIM <= 914399) {
-            timeAgo = "over a year";
-        } else if (timeDIM >= 914400 && timeDIM <= 1051199) {
-            timeAgo = "almost 2 years";
-        } else {
-            timeAgo = "about " + (Math.round(timeDIM / 525600)) + " years";
-        }
-        return timeAgo + " ago";
+        return convTime;
     }
 
-    public static Date currentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTime();
-    }
-
-    private static int getTimeDistanceInMinutes(long time) {
-        long timeDistance = currentDate().getTime() - time;
-        return Math.round((Math.abs(timeDistance) / 1000) / 60);
-    }
 
 }
