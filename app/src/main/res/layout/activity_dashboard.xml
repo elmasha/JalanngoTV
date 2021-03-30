@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:background="@color/blackiie"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/layout_logo"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:src="@drawable/jtvlogo"
+                android:layout_height="50dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="JalangoTV"
+                android:layout_marginTop="12dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/orange"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/home_profileImage"
+            android:layout_width="40dp"
+            android:gravity="end"
+            android:src="@drawable/profileicon"
+            android:layout_margin="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="40dp"/>
+
+
+
+        <LinearLayout
+            android:id="@+id/layout_category"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/home_profileImage"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categories"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/lightgray"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Recyclerview_category"
+                android:layout_width="match_parent"
+                android:padding="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_below="@id/r1"
+        android:layout_height="match_parent"/>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        app:itemIconTint="@color/gray"
+        app:itemIconSize="30dp"
+        app:itemRippleColor="@color/orange"
+        android:background="@color/blackiie"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

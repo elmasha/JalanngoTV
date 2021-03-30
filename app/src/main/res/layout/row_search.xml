@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    android:layout_margin="3dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/blackgrey"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_top"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/search_image"
+                android:layout_width="130dp"
+                android:layout_height="100dp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:padding="3dp"
+                android:layout_below="@id/search_image"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/search_headline"
+                    android:layout_width="250dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="19dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/search_story"
+                    android:layout_width="240dp"
+                    android:ellipsize="end"
+                    android:maxLines="4"
+                    android:minLines="3"
+                    android:text="TextView"
+                    android:textColor="@color/lightgray"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/layout_top"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/comment"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 0 "
+                    android:textStyle="bold"
+                    android:textColor="@color/gray"
+                    android:textSize="17dp"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/likes"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 0 "
+                    android:textStyle="bold"
+                    android:textColor="@color/gray"
+                    android:textSize="17dp"
+                    />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/search_date"
+                android:text="01/10/2021"
+                android:textColor="@color/gray"
+                android:textSize="16dp"
+                android:layout_marginStart="13dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

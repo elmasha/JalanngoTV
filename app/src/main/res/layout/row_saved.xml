@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="3dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/blackgrey"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/saved_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/news_image"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/saved_headline"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="Headlines"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:textColor="@color/white"
+                android:textSize="19dp"
+                />
+            <TextView
+                android:id="@+id/saved_story"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="story"
+                android:maxLines="3"
+                android:minLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/lightgray"
+                android:textSize="15dp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 0 "
+                        android:drawableLeft="@drawable/comment"
+                        android:textColor="@color/orange"
+                        android:textSize="17dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 0 "
+                        android:drawableLeft="@drawable/likes"
+                        android:textColor="@color/orange"
+                        android:textSize="17dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 0 "
+                        android:drawableLeft="@drawable/eye"
+                        android:textColor="@color/orange"
+                        android:textSize="17dp"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/saved_date"
+                    android:text="01/10/2021"
+                    android:textSize="16dp"
+                    android:textColor="@color/gray"
+                    android:layout_marginStart="13dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/blackiie"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ui.home.HomeFragment">
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+        <LinearLayout
+            android:id="@+id/line22"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:drawableLeft="@drawable/ic_trending"
+                android:text="Latest news"
+                android:textSize="16dp"
+                android:drawableTint="@color/lightgray"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/lightgray"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+            <!--            <View-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_marginStart="10dp"-->
+            <!--                android:layout_height="3dp"-->
+            <!--                android:background="@color/green"-->
+            <!--                android:layout_marginLeft="10dp" />-->
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Recyclerview_trending"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp" />
+
+
+            <!--Slider view for displaying our sliding images-->
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/slider"
+                android:layout_width="340dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="200dp"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderIndicatorEnabled="false"
+                android:background="@color/blackiie"
+                app:sliderScrollTimeInSec="2" />
+
+
+            <TextView
+                android:id="@+id/hot_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hot news"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/lightgray"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Recyclerview_news"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_marginBottom="60dp"
+                android:layout_height="match_parent"
+                />
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+
+
+
+</RelativeLayout>

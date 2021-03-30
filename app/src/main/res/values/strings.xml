@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">JalangoTv</string>
+    <string name="title_activity_dashboard">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="Category">
+        <item>Select category</item>
+        <item>LifeStyle</item>
+        <item>Politics</item>
+        <item>Business</item>
+        <item>Entertainment</item>
+        <item>Opinions</item>
+        <item>News</item>
+        <item>Sports</item>
+    </string-array>
+</resources>

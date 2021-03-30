@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    android:layout_margin="3dp"
+    android:layout_height="240dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/blackgrey"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/cathome_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/bghomenews"
+                android:orientation="vertical"
+                android:padding="3dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/cathome_headline"
+                    android:layout_width="300dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="19dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/cathome_story"
+                    android:layout_width="280dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="8dp"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/Comment_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  0  "
+                            android:drawableLeft="@drawable/commentwhite"
+                            android:textColor="@color/orange"
+                            android:textSize="17dp"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/likes_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  0  "
+                            android:drawableLeft="@drawable/likeswhite"
+                            android:textColor="@color/orange"
+                            android:textSize="17dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/views_count_cat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  0  "
+                            android:drawableLeft="@drawable/eyewhite"
+                            android:textColor="@color/orange"
+                            android:textSize="17dp"
+                            />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cat_date"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:layout_marginStart="13dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/cat_news"
+                    android:text=""
+                    android:textColor="@color/orange"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp" />
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

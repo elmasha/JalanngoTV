@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "419565665139",
+    "project_id": "jalang-otv",
+    "storage_bucket": "jalang-otv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419565665139:android:6d106b2a37eff70baee306",
+        "android_client_info": {
+          "package_name": "el.com.jalangotv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419565665139-kjciv26vu0cv04p5khuea0jr41fph93b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_-e-xztpxZvQ1M07J3aPE3hrcngyFGGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419565665139-kjciv26vu0cv04p5khuea0jr41fph93b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
