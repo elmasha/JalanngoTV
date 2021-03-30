@@ -6,13 +6,5 @@
     android:background="@color/white"
     tools:context=".Fragment.CommentsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="Comment section"
-        android:textStyle="bold"
-        android:textColor="@color/orange"
-        android:textSize="20dp"
-        android:layout_height="wrap_content"/>
-
 
 </RelativeLayout>
