@@ -101,9 +101,8 @@
                                 android:layout_height="wrap_content"
                                 android:text=" 0 "
                                 android:drawableLeft="@drawable/comment"
-                                android:textStyle="bold"
                                 android:textColor="@color/orange"
-                                android:textSize="17dp"
+                                android:textSize="16dp"
                                 />
 
 
@@ -113,9 +112,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="  0  "
                                 android:drawableLeft="@drawable/likes"
-                                android:textStyle="bold"
                                 android:textColor="@color/orange"
-                                android:textSize="17dp"
+                                android:textSize="16dp"
                                 />
 
 
@@ -125,9 +123,8 @@
                                 android:drawableLeft="@drawable/eye"
                                 android:layout_height="wrap_content"
                                 android:text="  0 "
-                                android:textStyle="bold"
                                 android:textColor="@color/orange"
-                                android:textSize="17dp"
+                                android:textSize="16dp"
                                 />
 
                         </LinearLayout>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="yellow">#F7C010</color>
+    <color name="yellow">#F1861A</color>
     <color name="orange">#F1861A</color>
     <color name="black">#060606</color>
     <color name="blackiie">#070707</color>
     <color name="blackgrey">#040404</color>
     <color name="gray">#7A7A7A</color>
     <color name="lightgray">#A9A9A9</color>
-    <color name="green">#1C4A20</color>
+    <color name="green">#05760D</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

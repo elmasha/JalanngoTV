@@ -52,6 +52,7 @@ public class ViewNewsActivity extends AppCompatActivity {
     CollectionReference newsRef = db.collection("News");
     CollectionReference SavedNewsRef = db.collection("SavedNews");
     private int commentState = 0;
+    private String story_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +77,14 @@ public class ViewNewsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (commentState == 0){
                     commentState =1;
-                    getSupportFragmentManager().beginTransaction().add(R.id.comment_fragmentHost,new
-                            CommentsFragment()).commit();
+
 
                     if (Doc_Id !=null) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("Doc_comment", Doc_Id);
+                        bundle.putString("Doc_comment", story_ID);
+                        bundle.putString("Headline", headlines);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.comment_fragmentHost,new
+                                CommentsFragment()).commit();
                         Intent intent = getIntent();
                         CommentsFragment fragInfo = new CommentsFragment();
                         fragInfo.setArguments(bundle);
@@ -161,6 +164,12 @@ public class ViewNewsActivity extends AppCompatActivity {
 
     }
 
+    public Bundle getMyData() {
+        Bundle hm = new Bundle();
+        hm.putString("val1",story_ID);
+        hm.putString("val2",headlines);
+        return hm;
+    }
     private void SaveStory() {
 
         if (Doc_Id != null){
@@ -220,6 +229,7 @@ public class ViewNewsActivity extends AppCompatActivity {
                         likie = mynews.getLikesCount();
                         commentie = mynews.getCommentCount();
                         views = mynews.getViewsCount();
+                        story_ID = mynews.getDoc_ID();
 
 
                         if (news_imaged != null){

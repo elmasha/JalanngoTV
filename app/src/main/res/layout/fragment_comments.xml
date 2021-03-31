@@ -40,9 +40,8 @@
 
 
 
-
-
         <LinearLayout
+            android:id="@+id/linearView"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_below="@id/r444"
@@ -50,6 +49,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/comments"
                 android:layout_width="wrap_content"
                 android:text="Comments"
                 android:textStyle="bold"
@@ -59,10 +59,12 @@
                 android:textSize="20dp"
                 android:layout_height="wrap_content"/>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/Recyclerview_comment"
                 android:layout_width="match_parent"
                 android:padding="5dp"
+                android:layout_marginBottom="65dp"
                 android:layout_height="match_parent"/>
 
         </LinearLayout>
@@ -79,29 +81,47 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="50dp"
+            android:layout_width="45dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/profileicon"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_comment"
-            android:layout_width="250dp"
-            android:background="@color/blackiie"
-            app:boxStrokeWidth="3dp"
-            app:errorEnabled="true"
-            android:textColorHint="@color/gray"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="250dp"
-                android:hint="Write a comment."
-                android:maxLines="200"
-                android:backgroundTint="@color/blackiie"
-                android:background="@color/white"
-                android:textColor="@color/gray"
-                android:layout_height="wrap_content"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_comment"
+                android:layout_width="250dp"
+                android:background="@color/blackiie"
+                app:boxStrokeWidth="3dp"
+                android:textColorHint="@color/lightgray"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="250dp"
+                    android:hint="Add a comment."
+                    android:maxLines="200"
+                    android:backgroundTint="@color/blackiie"
+                    android:background="@color/white"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.github.ybq.android.spinkit.SpinKitView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Small.Wave"
+                android:layout_width="200dp"
+                android:visibility="gone"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/orange" />
+
+
+
+        </LinearLayout>
 
 
         <com.getbase.floatingactionbutton.FloatingActionButton

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/blackiie"
+    android:padding="8dp"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_comment"
+            android:layout_width="50dp"
+            android:src="@drawable/profileicon"
+            android:layout_height="50dp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/username"
+                android:text="Elmasha Omondi"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="0dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp" />
+
+            <TextView
+                android:id="@+id/username_comment"
+                android:text="Elmasha Omondi"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="0dp"
+                android:minLines="2"
+                android:maxLines="4"
+                android:textColor="@color/lightgray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 0 "
+                    android:drawableLeft="@drawable/comment"
+                    android:textColor="@color/orange"
+                    android:textSize="17dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 0 "
+                    android:drawableLeft="@drawable/likes"
+                    android:textColor="@color/orange"
+                    android:textSize="17dp"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/comment_date"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="01/02/2021"
+        android:textColor="@color/lightgray"
+        android:layout_gravity="right"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

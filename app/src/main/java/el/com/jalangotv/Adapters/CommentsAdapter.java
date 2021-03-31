@@ -3,10 +3,10 @@ package el.com.jalangotv.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,38 +25,38 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import el.com.jalangotv.models.Comments;
 import el.com.jalangotv.R;
-import el.com.jalangotv.models.News;
 
-public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, CategoryNewsAdapter.NewsViewHolder> {
+public class CommentsAdapter extends FirestoreRecyclerAdapter<Comments, CommentsAdapter.CommentViewHolder> {
 
     private OnItemCickListener listener;
     public Context context;
 
 
-    public CategoryNewsAdapter(@NonNull FirestoreRecyclerOptions<News>options) {
+    public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comments>options) {
         super(options);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("ResourceAsColor")
     @Override
-    protected void onBindViewHolder(@NonNull NewsViewHolder holder, int position, @NonNull News model) {
-        holder.headline.setText(model.getHeadline());
-        holder.story.setText(model.getStory());
-        holder.category.setText(model.getCategory());
-        holder.likeCount.setText(model.getLikesCount()+"");
-        holder.viewsCount.setText(model.getViewsCount()+"");
-        holder.commentCount.setText(model.getCommentCount()+"");
+    protected void onBindViewHolder(@NonNull CommentViewHolder holder, int position, @NonNull Comments model) {
 
-        Picasso.get().load(model.getNews_image()).fit().into(holder.homeNewsImage);
+        if (model.getUserName()!= null){
+            holder.userName.setText(model.getUserName());
+        }
 
-        long milisecond = model.getTimestamp().getTime();
-//        String date = DateFormat.format("dd-MMM-yyyy | hh:mm a",new Date(milisecond)).toString();
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        holder.date.setText(getTimeAgo(model.getTimestamp().getTime()));
+        holder.comment.setText(model.getComment());
+        //Picasso.get().load(model.getUserImage()).fit().into(holder.userImage);
 
+
+        if (model.getTimestamp()!=null) {
+            long milisecond = model.getTimestamp().getTime();
+            String date = DateFormat.format("EEE-MMM-yyyy hh:mm", new Date(milisecond)).toString();
+            holder.date.setText(date);
+        }
 
 
 
@@ -66,10 +66,10 @@ public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, Category
 
     @NonNull
     @Override
-    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_news,parent,false);
+    public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_comment,parent,false);
 
-        return new NewsViewHolder(v);
+        return new CommentViewHolder(v);
     }
 
     @Override
@@ -82,23 +82,18 @@ public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, Category
      getSnapshots().getSnapshot(position).getReference().delete();
     }
 
-    class NewsViewHolder extends RecyclerView.ViewHolder{
-       private TextView headline,story,category,likeCount,commentCount,viewsCount,date;
-       private ImageView homeNewsImage;
+    class CommentViewHolder extends RecyclerView.ViewHolder{
+       private TextView userName,comment,date;
+       private CircleImageView userImage;
        private RelativeLayout ord_layout;
 
-        public NewsViewHolder(@NonNull View itemView) {
+        public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            headline = itemView.findViewById(R.id.cathome_headline);
-            story = itemView.findViewById(R.id.cathome_story);
-            homeNewsImage  = itemView.findViewById(R.id.cathome_image);
-            category = itemView.findViewById(R.id.cat_news);
-            viewsCount = itemView.findViewById(R.id.views_count_cat);
-            commentCount = itemView.findViewById(R.id.Comment_count);
-            likeCount = itemView.findViewById(R.id.likes_count);
-            date = itemView.findViewById(R.id.cat_date);
-
+            userName = itemView.findViewById(R.id.username);
+            comment = itemView.findViewById(R.id.username_comment);
+            userImage  = itemView.findViewById(R.id.profile_comment);
+            date = itemView.findViewById(R.id.comment_date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

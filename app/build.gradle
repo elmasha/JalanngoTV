@@ -49,6 +49,9 @@ dependencies {
     //---FirebaseAuth
     implementation 'com.google.firebase:firebase-auth:15.0.0'
 
+    //SpinKit
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
     //floatingaction
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 

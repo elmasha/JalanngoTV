@@ -56,6 +56,7 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
         holder.likes.setText(model.getLikesCount()+"");
         holder.category.setText(model.getCategory());
         holder.viewCount.setText(model.getViewsCount()+"");
+        holder.comment.setText(model.getCommentCount()+"");
 
         Picasso.get().load(model.getNews_image()).fit().into(holder.homeNewsImage);
 
