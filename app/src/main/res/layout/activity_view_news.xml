@@ -247,47 +247,6 @@
                         </LinearLayout>
 
 
-
-                        <LinearLayout
-                                android:id="@+id/layout_comment"
-                                android:orientation="horizontal"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_margin="10dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_height="wrap_content">
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/input_comment"
-                                    android:layout_width="200dp"
-                                    app:boxStrokeWidth="3dp"
-                                    app:errorEnabled="true"
-                                    android:layout_height="wrap_content">
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:layout_width="200dp"
-                                        android:hint="Write a comment."
-                                        android:background="@color/white"
-                                        android:layout_height="wrap_content"/>
-
-                                </com.google.android.material.textfield.TextInputLayout>
-
-
-                                <com.getbase.floatingactionbutton.FloatingActionButton
-                                    android:id="@+id/send_comment"
-                                    android:layout_width="wrap_content"
-                                    app:fab_size="mini"
-                                    app:fab_colorPressed="@color/gray"
-                                    app:fab_colorNormal="@color/white"
-                                    app:fab_icon="@drawable/ic_send"
-                                    android:layout_height="wrap_content"/>
-
-                            </LinearLayout>
-
-
-
-
-
-
-
                     </LinearLayout>
 
 

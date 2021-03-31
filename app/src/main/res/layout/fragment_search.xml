@@ -12,6 +12,8 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/search"
             android:layout_width="300dp"
+            android:background="@color/blackiie"
+            android:textColorHint="@color/gray"
             android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
             android:layout_height="40dp">
@@ -19,6 +21,8 @@
                 android:layout_width="300dp"
                 android:hint="Search"
                 android:textSize="17dp"
+                android:drawableTint="@color/gray"
+                android:background="@color/blackiie"
                 android:drawableLeft="@drawable/ic_search"
                 android:layout_height="wrap_content"/>
 

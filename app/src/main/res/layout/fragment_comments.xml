@@ -3,16 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.CommentsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="Comment section"
-        android:textStyle="bold"
-        android:textColor="@color/orange"
-        android:textSize="20dp"
-        android:layout_height="wrap_content"/>
 
+
+
+    <RelativeLayout
+        android:id="@+id/r444"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <ImageView
+            android:id="@+id/view_image2"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            />
+        <TextView
+            android:id="@+id/view_headline2"
+            android:layout_width="match_parent"
+            android:ellipsize="end"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:text="Headline"
+            android:background="@drawable/bghomenews"
+            android:textColor="@color/white"
+            android:textSize="26dp"
+            android:layout_alignParentBottom="true"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            />
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_below="@id/r444"
+            android:background="@color/blackiie"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Comments"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/orange"
+                android:textSize="20dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Recyclerview_comment"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_comment"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:src="@drawable/profileicon"
+            android:layout_height="50dp"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_comment"
+            android:layout_width="250dp"
+            android:background="@color/blackiie"
+            app:boxStrokeWidth="3dp"
+            app:errorEnabled="true"
+            android:textColorHint="@color/gray"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="250dp"
+                android:hint="Write a comment."
+                android:maxLines="200"
+                android:backgroundTint="@color/blackiie"
+                android:background="@color/white"
+                android:textColor="@color/gray"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/send_comment"
+            android:layout_width="wrap_content"
+            app:fab_size="mini"
+            app:fab_colorPressed="@color/gray"
+            app:fab_colorNormal="@color/orange"
+            app:fab_icon="@drawable/ic_send"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

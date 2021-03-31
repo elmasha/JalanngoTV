@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import el.com.jalangotv.Activities.DashboardActivity;
 import el.com.jalangotv.Activities.ui.home.HomeFragment;
 import el.com.jalangotv.Fragment.CommentsFragment;
+import el.com.jalangotv.Fragment.ViewCategoryFragment;
 import el.com.jalangotv.models.News;
 
 import static java.security.AccessController.getContext;
@@ -65,7 +67,9 @@ public class ViewNewsActivity extends AppCompatActivity {
         likeCount = findViewById(R.id.like_view_count);
         commentCount = findViewById(R.id.comment_view_count);
         viewsCount = findViewById(R.id.eye_view_count);
+        Bundle extra = getIntent().getExtras();
 
+        if (extra != null){ Doc_Id = extra.getString("doc_ID"); }
 
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +78,15 @@ public class ViewNewsActivity extends AppCompatActivity {
                     commentState =1;
                     getSupportFragmentManager().beginTransaction().add(R.id.comment_fragmentHost,new
                             CommentsFragment()).commit();
-                }else if (commentState == 1){
+
+                    if (Doc_Id !=null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Doc_comment", Doc_Id);
+                        Intent intent = getIntent();
+                        CommentsFragment fragInfo = new CommentsFragment();
+                        fragInfo.setArguments(bundle);
+                    }
+                    }else if (commentState == 1){
 
                     getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
                 }
@@ -143,12 +155,7 @@ public class ViewNewsActivity extends AppCompatActivity {
             }
         });
 
-        Bundle extra = getIntent().getExtras();
 
-        if (extra != null)
-        {
-            Doc_Id = extra.getString("doc_ID");
-        }
 
         LoadDetails();
 
@@ -246,18 +253,15 @@ public class ViewNewsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+        if (commentState == 0) {
             backToast.cancel();
             super.onBackPressed();
             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
             finish();
             return;
-        } else {
-
-            if (commentState == 1){
-                commentState =0;
-                getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
-            }
+        } else if (commentState == 1){
+            commentState =0;
+            getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
         }
 
         backPressedTime = System.currentTimeMillis();
