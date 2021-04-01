@@ -55,7 +55,7 @@ View root;
     private TextInputLayout InputComment;
 
     private String Doc_ID;
-    private TextView doc_ID,heads;
+    private TextView doc_ID,heads,closeComment;
     private RecyclerView recyclerView;
     private CommentsAdapter adapter;
     private ProgressBar progressBar;
@@ -75,6 +75,7 @@ View root;
         doc_ID = root.findViewById(R.id.comments);
         recyclerView = root.findViewById(R.id.Recyclerview_comment);
          progressBar = root.findViewById(R.id.spin_kit);
+         closeComment = root.findViewById(R.id.close_comment);
          heads = root.findViewById(R.id.view_headline2);
         Wave wave = new Wave();
         progressBar.setIndeterminateDrawable(wave);
@@ -84,6 +85,17 @@ View root;
         Bundle results = activity.getMyData();
         Doc_ID = results.getString("val1");
 
+
+
+        closeComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getActivity().getSupportFragmentManager().findFragmentById(R.id.comment_fragmentHost) != null) {
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction().remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.comment_fragmentHost)).commit();
+                }
+            }
+        });
 
         sendComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +214,7 @@ View root;
                 {
                     //----Likes count
                     commentCount(Doc_ID);
+                    InputComment.getEditText().setText("");
 
                     ///___end likes
 
@@ -255,4 +268,6 @@ View root;
         super.onStart();
         FetchComments();
     }
+
+
 }

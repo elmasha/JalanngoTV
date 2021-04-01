@@ -2,6 +2,8 @@ package el.com.jalangotv;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +29,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Transaction;
 import com.squareup.picasso.Picasso;
 
@@ -33,8 +37,10 @@ import java.util.HashMap;
 
 import el.com.jalangotv.Activities.DashboardActivity;
 import el.com.jalangotv.Activities.ui.home.HomeFragment;
+import el.com.jalangotv.Adapters.CommentsAdapter;
 import el.com.jalangotv.Fragment.CommentsFragment;
 import el.com.jalangotv.Fragment.ViewCategoryFragment;
+import el.com.jalangotv.models.Comments;
 import el.com.jalangotv.models.News;
 
 import static java.security.AccessController.getContext;
@@ -53,6 +59,14 @@ public class ViewNewsActivity extends AppCompatActivity {
     CollectionReference SavedNewsRef = db.collection("SavedNews");
     private int commentState = 0;
     private String story_ID;
+    private RecyclerView recyclerView;
+    private CommentsAdapter adapter;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    FetchComments();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +82,7 @@ public class ViewNewsActivity extends AppCompatActivity {
         likeCount = findViewById(R.id.like_view_count);
         commentCount = findViewById(R.id.comment_view_count);
         viewsCount = findViewById(R.id.eye_view_count);
+        recyclerView = findViewById(R.id.commentView_Recycler);
         Bundle extra = getIntent().getExtras();
 
         if (extra != null){ Doc_Id = extra.getString("doc_ID"); }
@@ -75,24 +90,19 @@ public class ViewNewsActivity extends AppCompatActivity {
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (commentState == 0){
-                    commentState =1;
-
-
                     if (Doc_Id !=null) {
                         Bundle bundle = new Bundle();
                         bundle.putString("Doc_comment", story_ID);
-                        bundle.putString("Headline", headlines);
                         getSupportFragmentManager().beginTransaction().replace(R.id.comment_fragmentHost,new
                                 CommentsFragment()).commit();
                         Intent intent = getIntent();
                         CommentsFragment fragInfo = new CommentsFragment();
                         fragInfo.setArguments(bundle);
                     }
-                    }else if (commentState == 1){
 
-                    getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
-                }
+                    }
 
             }
         });
@@ -164,12 +174,64 @@ public class ViewNewsActivity extends AppCompatActivity {
 
     }
 
+
+    //----Fetch news--
+    private void FetchComments() {
+
+//        String UID = mAuth.getCurrentUser().getUid();
+        Query query =  newsRef.document(Doc_Id).collection("Comments")
+                .orderBy("timestamp", Query.Direction.DESCENDING).limit(4);
+        FirestoreRecyclerOptions<Comments> transaction = new FirestoreRecyclerOptions.Builder<Comments>()
+                .setQuery(query, Comments.class)
+                .setLifecycleOwner(this)
+                .build();
+        adapter = new CommentsAdapter(transaction);
+
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(adapter);
+
+
+        adapter.setOnItemClickListener(new CommentsAdapter.OnItemCickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                News news = documentSnapshot.toObject(News.class);
+                String headline = news.getHeadline();
+                String story = news.getStory();
+                String image = news.getNews_image();
+                Doc_Id = news.getDoc_ID();
+                if (Doc_Id !=null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Doc_comment", Doc_Id);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.comment_fragmentHost,new
+                            CommentsFragment()).commit();
+                    Intent intent = getIntent();
+                    CommentsFragment fragInfo = new CommentsFragment();
+                    fragInfo.setArguments(bundle);
+                }
+
+
+            }
+        });
+
+
+
+
+
+    }
+    //...end fetch..
+
     public Bundle getMyData() {
         Bundle hm = new Bundle();
         hm.putString("val1",story_ID);
         hm.putString("val2",headlines);
         return hm;
     }
+
+
     private void SaveStory() {
 
         if (Doc_Id != null){
@@ -255,26 +317,7 @@ public class ViewNewsActivity extends AppCompatActivity {
             });
         }
 
-
     }
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        if (commentState == 0) {
-            backToast.cancel();
-            super.onBackPressed();
-            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
-            finish();
-            return;
-        } else if (commentState == 1){
-            commentState =0;
-            getSupportFragmentManager().beginTransaction().remove(new CommentsFragment()).commit();
-        }
-
-        backPressedTime = System.currentTimeMillis();
-
-    }
 }
