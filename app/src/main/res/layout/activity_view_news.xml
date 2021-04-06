@@ -210,18 +210,34 @@
                         </LinearLayout>
 
 
-                        <TextView
-                            android:id="@+id/view_headlines"
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_gravity="left"
+                            android:orientation="horizontal"
                             android:layout_marginStart="17dp"
-                            android:textSize="19dp"
-                            android:layout_marginTop="8dp"
-                            android:textStyle="bold"
-                            android:text="Headlines"
-                            android:textColor="@color/white"
+                            android:layout_marginTop="10dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp" />
+                            android:layout_marginLeft="17dp">
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/orange"
+                                android:layout_height="40dp"/>
+
+                            <TextView
+                                android:id="@+id/view_headlines"
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="19dp"
+                                android:layout_marginStart="5dp"
+                                android:textStyle="bold"
+                                android:text="Headlines"
+                                android:textColor="@color/white"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp" />
+
+
+                        </LinearLayout>
 
 
 
@@ -230,17 +246,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <TextView
-                                android:id="@+id/view_story"
-                                android:layout_width="300dp"
-                                android:maxLines="400"
-                                android:padding="10dp"
-                                android:scrollbars="vertical"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_height="match_parent"
-                                android:text=""
-                                android:textColor="@color/lightgray"
-                                android:textSize="17dp" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/view_story"
+                                    android:layout_width="300dp"
+                                    android:maxLines="400"
+                                    android:padding="10dp"
+                                    android:scrollbars="vertical"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_height="match_parent"
+                                    android:text=""
+                                    android:textColor="@color/lightgray"
+                                    android:textSize="17dp" />
+                            </RelativeLayout>
+
 
                         </androidx.core.widget.NestedScrollView>
 
@@ -267,14 +288,9 @@
                     </LinearLayout>
 
               </androidx.cardview.widget.CardView>
-
             </RelativeLayout>
 
-
-
         </RelativeLayout>
-
-
 
     </androidx.core.widget.NestedScrollView>
 

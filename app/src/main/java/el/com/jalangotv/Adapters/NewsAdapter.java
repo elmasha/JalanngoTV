@@ -76,7 +76,6 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
             holder.comment.setText(model.getCommentCount()+"");
             holder.likes.setText(model.getLikesCount()+"");
         }
-
         Picasso.get().load(model.getNews_image()).fit().into(holder.homeNewsImage);
 
         long milisecond = model.getTimestamp().getTime();
@@ -127,7 +126,6 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
             comment = itemView.findViewById(R.id.comment_counts);
             date = itemView.findViewById(R.id.news_date);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,12 +134,9 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
 
                     if (position != RecyclerView.NO_POSITION && listener != null){
                         listener.onItemClick(getSnapshots().getSnapshot(position),position);
-
                     }
                 }
             });
-
-
 
         }
     }
@@ -158,7 +153,6 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
     public void setOnItemClickListener(OnItemCickListener listener){
         this.listener = listener;
     }
-
 
     public String covertTimeToText(String dataDate) {
 
@@ -205,6 +199,5 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
 
         return convTime;
     }
-
 
 }

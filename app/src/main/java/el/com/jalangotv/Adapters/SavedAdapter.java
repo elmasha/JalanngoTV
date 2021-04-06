@@ -2,6 +2,7 @@ package el.com.jalangotv.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +47,23 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 //        holder.orderTime.setText(date);
 
-
-
-
-
+        if(model.getViewsCount() >= 1000){
+            double div = model.getViewsCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.views.setText(precision.format(div)+"K ");
+        }else if(model.getLikesCount() >= 1000) {
+            double divlike = model.getLikesCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.likes.setText(precision.format(divlike)+"K ");
+        }else if (model.getCommentCount() >=1000){
+            double divcomment = model.getCommentCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.comment.setText(precision.format(divcomment)+"K ");
+        }else {
+            holder.views.setText(model.getViewsCount()+"");
+            holder.comment.setText(model.getCommentCount()+"");
+            holder.likes.setText(model.getLikesCount()+"");
+        }
 
     }
 
@@ -72,7 +86,7 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder{
-       private TextView headline,story;
+       private TextView headline,story,likes,views,comment;
        private ImageView homeNewsImage;
        private RelativeLayout ord_layout;
 
@@ -82,6 +96,9 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
             headline = itemView.findViewById(R.id.saved_headline);
             story = itemView.findViewById(R.id.saved_story);
             homeNewsImage  = itemView.findViewById(R.id.saved_image);
+            likes = itemView.findViewById(R.id.save_likes);
+            views = itemView.findViewById(R.id.save_views);
+            comment = itemView.findViewById(R.id.save_comment);
 
 
 

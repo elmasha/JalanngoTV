@@ -80,10 +80,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" 0 "
+                    android:layout_marginStart="10dp"
                     android:drawableLeft="@drawable/likes"
                     android:textColor="@color/orange"
                     android:textSize="16dp"
-                    />
+                    android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:id="@+id/search_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 0 "
+                android:drawableLeft="@drawable/eye"
+                android:textColor="@color/orange"
+                android:layout_marginStart="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="15dp" />
 
 
 
@@ -94,7 +106,7 @@
                 android:textColor="@color/gray"
                 android:textSize="16dp"
                 android:layout_gravity=""
-                android:layout_marginStart="13dp"
+                android:layout_marginStart="10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" />
 
@@ -106,12 +118,12 @@
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="30dp"
                 android:drawableRight="@drawable/ic_arrow"
                 android:drawableTint="@color/white"
                 android:layout_gravity="right"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp" />
+                android:layout_marginLeft="30dp" />
         </LinearLayout>
 
 

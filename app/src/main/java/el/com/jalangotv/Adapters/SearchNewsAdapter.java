@@ -2,6 +2,7 @@ package el.com.jalangotv.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,27 @@ public class SearchNewsAdapter extends FirestoreRecyclerAdapter<News, SearchNews
 //        holder.orderTime.setText(date);
 
 
+        if(model.getViewsCount() >= 1000){
+            double div = model.getViewsCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.viewCount.setText(precision.format(div)+"K ");
+
+        }else if(model.getLikesCount() >= 1000)
+        {    double divlike = model.getLikesCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.likes.setText(precision.format(divlike)+"K ");
+
+        }else if (model.getCommentCount() >=1000){
+            double divcomment = model.getCommentCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.comment.setText(precision.format(divcomment)+"K ");
+
+        }else {
+            holder.viewCount.setText(model.getViewsCount()+"");
+            holder.comment.setText(model.getCommentCount()+"");
+            holder.likes.setText(model.getLikesCount()+"");
+        }
+
 
 
 
@@ -73,7 +95,8 @@ public class SearchNewsAdapter extends FirestoreRecyclerAdapter<News, SearchNews
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder{
-       private TextView headline,story;
+       private TextView headline,story,likes,comment,viewCount
+               ;
        private ImageView homeNewsImage;
        private RelativeLayout ord_layout;
 
@@ -83,6 +106,9 @@ public class SearchNewsAdapter extends FirestoreRecyclerAdapter<News, SearchNews
             headline = itemView.findViewById(R.id.search_headline);
             story = itemView.findViewById(R.id.search_story);
             homeNewsImage  = itemView.findViewById(R.id.search_image);
+            comment = itemView.findViewById(R.id.search_comment);
+            likes = itemView.findViewById(R.id.search_likes);
+            viewCount = itemView.findViewById(R.id.search_views);
 
 
 

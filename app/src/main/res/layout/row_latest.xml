@@ -26,7 +26,6 @@
                 android:text=" 0 "
                 android:textStyle="bold"
                 android:textSize="17dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/bgcat"
                 android:textColor="@color/orange"
                 android:layout_height="wrap_content"
