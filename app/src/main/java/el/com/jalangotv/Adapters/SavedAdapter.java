@@ -20,6 +20,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import el.com.jalangotv.R;
 import el.com.jalangotv.models.News;
 
@@ -41,11 +46,11 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
         holder.story.setText(model.getStory());
         Picasso.get().load(model.getNews_image()).fit().into(holder.homeNewsImage);
 
-//        long milisecond = model.getTimestamp().getTime();
+       long milisecond = model.getTimestamp().getTime();
 //        String date = DateFormat.format("dd-MMM-yyyy | hh:mm a",new Date(milisecond)).toString();
 //
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-//        holder.orderTime.setText(date);
+        holder.date.setText(getTimeAgo(milisecond)+"");
 
         if(model.getViewsCount() >= 1000){
             double div = model.getViewsCount() /1000;
@@ -86,7 +91,7 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder{
-       private TextView headline,story,likes,views,comment;
+       private TextView headline,story,likes,views,comment,date;
        private ImageView homeNewsImage;
        private RelativeLayout ord_layout;
 
@@ -98,6 +103,7 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
             homeNewsImage  = itemView.findViewById(R.id.saved_image);
             likes = itemView.findViewById(R.id.save_likes);
             views = itemView.findViewById(R.id.save_views);
+            date = itemView.findViewById(R.id.saved_date);
             comment = itemView.findViewById(R.id.save_comment);
 
 
@@ -106,7 +112,6 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     int position = getAdapterPosition();
 
                     if (position != RecyclerView.NO_POSITION && listener != null){
@@ -115,8 +120,6 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
                     }
                 }
             });
-
-
 
         }
     }
@@ -132,6 +135,147 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
 
     public void setOnItemClickListener(OnItemCickListener listener){
         this.listener = listener;
+
+    }
+
+
+
+    public static String getlongtoago(long createdAt) {
+        DateFormat userDateFormat = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+        DateFormat dateFormatNeeded = new SimpleDateFormat("MM/dd/yyyy HH:MM:SS");
+        Date date = null;
+        date = new Date(createdAt);
+        String crdate1 = dateFormatNeeded.format(date);
+
+        // Date Calculation
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        crdate1 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(date);
+
+        // get current date time with Calendar()
+        Calendar cal = Calendar.getInstance();
+        String currenttime = dateFormat.format(cal.getTime());
+
+        Date CreatedAt = null;
+        Date current = null;
+        try {
+            CreatedAt = dateFormat.parse(crdate1);
+            current = dateFormat.parse(currenttime);
+        } catch (java.text.ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // Get msec from each, and subtract.
+        long diff = current.getTime() - CreatedAt.getTime();
+        long diffSeconds = diff / 1000;
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000) % 24;
+        long diffDays = diff / (24 * 60 * 60 * 1000);
+
+        String time = null;
+        if (diffDays > 0) {
+            if (diffDays == 1) {
+                time = diffDays + " day ago ";
+            }else if  (diffDays >= 7) {
+
+                time = diffDays + "week ago ";
+            }else {
+                time = diffDays + " days ago ";
+            }
+        } else {
+            if (diffHours > 0) {
+                if (diffHours == 1) {
+                    time = diffHours + " hr ago";
+                } else {
+                    time = diffHours + " hrs ago";
+                }
+            } else {
+                if (diffMinutes > 0) {
+                    if (diffMinutes == 1) {
+                        time = diffMinutes + " min ago";
+                    } else {
+                        time = diffMinutes + " mins ago";
+                    }
+                } else {
+                    if (diffSeconds > 0) {
+                        time = diffSeconds + " secs ago";
+                    }
+                }
+
+            }
+
+        }
+        return time;
+    }
+
+
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+    private static final int WEEK_MILLIS = 7 * DAY_MILLIS ;
+
+    public static String getTimeAgo(long time) {
+
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+        long now =System.currentTimeMillis();;
+
+        long diff = now - time;
+        if(diff>0) {
+
+            if (diff < MINUTE_MILLIS) {
+                return "just now";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute ago";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes ago";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour ago";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " hours ago";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "yesterday";
+            } else if (diff < 7 * DAY_MILLIS) {
+                return diff / DAY_MILLIS + " days ago";
+            } else if (diff < 2 * WEEK_MILLIS) {
+                return "a week ago";
+            } else if (diff < WEEK_MILLIS * 3) {
+                return diff / WEEK_MILLIS + " weeks ago";
+            } else {
+                java.util.Date date = new java.util.Date((long) time);
+                return date.toString();
+            }
+
+        }
+        else {
+
+            diff=time-now;
+            if (diff < MINUTE_MILLIS) {
+                return "this minute";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute later";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes later";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour later";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " hours later";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "tomorrow";
+            } else if (diff < 7 * DAY_MILLIS) {
+                return diff / DAY_MILLIS + " days later";
+            } else if (diff < 2 * WEEK_MILLIS) {
+                return "a week later";
+            } else if (diff < WEEK_MILLIS * 3) {
+                return diff / WEEK_MILLIS + " weeks later";
+            } else {
+                java.util.Date date = new java.util.Date((long) time);
+                return date.toString();
+            }
+        }
 
     }
 
