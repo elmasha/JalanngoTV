@@ -241,7 +241,7 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
             } else if (diff < 7 * DAY_MILLIS) {
                 return diff / DAY_MILLIS + " days ago";
             } else if (diff < 2 * WEEK_MILLIS) {
-                return "a week ago";
+                return "1 week ago";
             } else if (diff < WEEK_MILLIS * 3) {
                 return diff / WEEK_MILLIS + " weeks ago";
             } else {

@@ -83,6 +83,7 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 
+        holder.date.setText(getTimeAgo(milisecond)+"");
 
 //        Date datemilisec = DateTimeUtils.formatDate(milisecond, DateTimeUnits.SECONDS);
 //        String timeAgo = DateTimeUtils.getTimeAgo(context,datemilisec, DateTimeStyle.AGO_SHORT_STRING );
@@ -154,50 +155,75 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
         this.listener = listener;
     }
 
-    public String covertTimeToText(String dataDate) {
 
-        String convTime = null;
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+    private static final int WEEK_MILLIS = 7 * DAY_MILLIS ;
 
-        String prefix = "";
-        String suffix = "Ago";
+    public static String getTimeAgo(long time) {
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date pasTime = dateFormat.parse(dataDate);
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+        long now =System.currentTimeMillis();;
 
-            Date nowTime = new Date();
+        long diff = now - time;
+        if(diff>0) {
 
-            long dateDiff = nowTime.getTime() - pasTime.getTime();
-
-            long second = TimeUnit.MILLISECONDS.toSeconds(dateDiff);
-            long minute = TimeUnit.MILLISECONDS.toMinutes(dateDiff);
-            long hour   = TimeUnit.MILLISECONDS.toHours(dateDiff);
-            long day  = TimeUnit.MILLISECONDS.toDays(dateDiff);
-
-            if (second < 60) {
-                convTime = second + " Seconds " + suffix;
-            } else if (minute < 60) {
-                convTime = minute + " Minutes "+suffix;
-            } else if (hour < 24) {
-                convTime = hour + " Hours "+suffix;
-            } else if (day >= 7) {
-                if (day > 360) {
-                    convTime = (day / 360) + " Years " + suffix;
-                } else if (day > 30) {
-                    convTime = (day / 30) + " Months " + suffix;
-                } else {
-                    convTime = (day / 7) + " Week " + suffix;
-                }
-            } else if (day < 7) {
-                convTime = day+" Days "+suffix;
+            if (diff < MINUTE_MILLIS) {
+                return "just now";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute ago";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes ago";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour ago";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " hours ago";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "yesterday";
+            } else if (diff < 7 * DAY_MILLIS) {
+                return diff / DAY_MILLIS + " days ago";
+            } else if (diff < 2 * WEEK_MILLIS) {
+                return "1 week ago";
+            } else if (diff < WEEK_MILLIS * 3) {
+                return diff / WEEK_MILLIS + " weeks ago";
+            } else {
+                java.util.Date date = new java.util.Date((long) time);
+                return date.toString();
             }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.e("ConvTimeE", e.getMessage());
+        }
+        else {
+
+            diff=time-now;
+            if (diff < MINUTE_MILLIS) {
+                return "this minute";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute later";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes later";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour later";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " hours later";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "tomorrow";
+            } else if (diff < 7 * DAY_MILLIS) {
+                return diff / DAY_MILLIS + " days later";
+            } else if (diff < 2 * WEEK_MILLIS) {
+                return "a week later";
+            } else if (diff < WEEK_MILLIS * 3) {
+                return diff / WEEK_MILLIS + " weeks later";
+            } else {
+                java.util.Date date = new java.util.Date((long) time);
+                return date.toString();
+            }
         }
 
-        return convTime;
     }
 
 }

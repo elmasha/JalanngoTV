@@ -92,7 +92,7 @@
                     android:id="@+id/saved_date"
                     android:text="01/10/2021"
                     android:textSize="16dp"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/white"
                     android:layout_marginStart="13dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" />
