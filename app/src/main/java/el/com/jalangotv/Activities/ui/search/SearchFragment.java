@@ -32,7 +32,7 @@ import el.com.jalangotv.models.News;
 
 public class SearchFragment extends Fragment {
 View root;
-    public NewsAdapter adapter;
+    public SearchNewsAdapter adapter;
     private FirebaseAuth mAuth;
     private RecyclerView SearchRecyclerView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -57,16 +57,16 @@ View root;
                 .setQuery(NewsRef, News.class)
                 .setLifecycleOwner(this)
                 .build();
-        adapter = new NewsAdapter(transaction);
+        adapter = new SearchNewsAdapter(transaction);
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         SearchRecyclerView.setHasFixedSize(true);
-        SearchRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        SearchRecyclerView.setLayoutManager(layoutManager);
         SearchRecyclerView.setNestedScrollingEnabled(false);
         SearchRecyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new NewsAdapter.OnItemCickListener() {
+        adapter.setOnItemClickListener(new SearchNewsAdapter.OnItemCickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 News news = documentSnapshot.toObject(News.class);

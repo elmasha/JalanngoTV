@@ -93,13 +93,26 @@
                     android:layout_marginStart="13dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" />
-            </LinearLayout>
 
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/news_date"
+                android:text="Read more"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:drawableRight="@drawable/ic_arrow"
+                android:drawableTint="@color/white"
+                android:layout_gravity="right"
+                android:layout_height="wrap_content"
+                />
         </LinearLayout>
 
 
     </LinearLayout>
-
 
 
 </androidx.cardview.widget.CardView>

@@ -115,6 +115,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/news_date"
+                    android:text="Read more"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableRight="@drawable/ic_arrow"
+                    android:drawableTint="@color/white"
+                    android:layout_gravity="right"
+                    android:layout_height="wrap_content"
+                    />
+
             </LinearLayout>
 
 

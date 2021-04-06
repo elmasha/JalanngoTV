@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +30,7 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
+import el.com.jalangotv.Adapters.SavedAdapter;
 import el.com.jalangotv.Adapters.SliderAdapter;
 import el.com.jalangotv.ViewNewsActivity;
 import el.com.jalangotv.Adapters.CategoryAdapter;
@@ -46,10 +46,11 @@ public class HomeFragment extends Fragment {
     public LatestNewsAdapter adapter2;
     private FirebaseAuth mAuth;
     public CategoryAdapter adapter;
-    private RecyclerView CategoryRecyclerView,TrendRecyclerView,newsRecycler;
+    private RecyclerView topNewsRecyclerView,TrendRecyclerView,newsRecycler;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference newsRef = db.collection("News");
     CollectionReference categoryRef = db.collection("Category");
+    public SavedAdapter adapterSave;
 
     private SliderAdapter sliderAdapter;
     private ArrayList<News> sliderDataArrayList;
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         TrendRecyclerView = root.findViewById(R.id.Recyclerview_trending);
         newsRecycler = root.findViewById(R.id.Recyclerview_news);
+        topNewsRecyclerView = root.findViewById(R.id.Recyclerview_moreNews);
         // creating a new array list fr our array list.
         sliderDataArrayList = new ArrayList<>();
 
@@ -235,7 +237,7 @@ public class HomeFragment extends Fragment {
 
 
     //----Fetch news--
-    private void FetchNews() {
+    private void FetchPopularNews() {
 
 //        String UID = mAuth.getCurrentUser().getUid();
         Query query = newsRef.orderBy("timestamp", Query.Direction.ASCENDING);
@@ -245,9 +247,10 @@ public class HomeFragment extends Fragment {
                 .build();
         adapter1 = new NewsAdapter(transaction);
 
-
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         newsRecycler.setHasFixedSize(true);
-        newsRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
+        newsRecycler.setLayoutManager(layoutManager);
         newsRecycler.setNestedScrollingEnabled(false);
         newsRecycler.setAdapter(adapter1);
 
@@ -274,17 +277,54 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
-
     }
     //...end fetch..
 
+    //----Fetch news--
+    private void FetchNews() {
+
+//        String UID = mAuth.getCurrentUser().getUid();
+        Query query = newsRef.orderBy("timestamp", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<News> transaction = new FirestoreRecyclerOptions.Builder<News>()
+                .setQuery(query, News.class)
+                .setLifecycleOwner(this)
+                .build();
+        adapterSave = new SavedAdapter(transaction);
+
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        topNewsRecyclerView.setHasFixedSize(true);
+        topNewsRecyclerView.setLayoutManager(layoutManager);
+        topNewsRecyclerView.setNestedScrollingEnabled(false);
+        topNewsRecyclerView.setAdapter(adapterSave);
+
+        adapterSave.setOnItemClickListener(new SavedAdapter.OnItemCickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                News news = documentSnapshot.toObject(News.class);
+                String headline = news.getHeadline();
+                String story = news.getStory();
+                String image = news.getNews_image();
+                String doc_id = news.getDoc_ID();
+                if (doc_id !=null |headline != null | story != null | image != null){
+                    Intent toVendorPref = new Intent(getActivity(), ViewNewsActivity.class);
+                    toVendorPref.putExtra("Headline",headline);
+                    toVendorPref.putExtra("Story",story);
+                    toVendorPref.putExtra("Image",image);
+                    toVendorPref.putExtra("doc_ID",doc_id);
+                    startActivity(toVendorPref);
+                    //viewsCount(doc_id);
+                }
+            }
+        });
+    }
+    //...end fetch..
 
     @Override
     public void onStart() {
         super.onStart();
     FetchLatestNews();
+    FetchPopularNews();
     FetchNews();
     loadImages();
 

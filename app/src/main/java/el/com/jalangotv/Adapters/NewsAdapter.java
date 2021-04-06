@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -53,10 +54,28 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
     protected void onBindViewHolder(@NonNull NewsViewHolder holder, int position, @NonNull News model) {
         holder.headline.setText(model.getHeadline());
         holder.story.setText(model.getStory());
-        holder.likes.setText(model.getLikesCount()+"");
         holder.category.setText(model.getCategory());
-        holder.viewCount.setText(model.getViewsCount()+"");
-        holder.comment.setText(model.getCommentCount()+"");
+
+        if(model.getViewsCount() >= 1000){
+            double div = model.getViewsCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.viewCount.setText(precision.format(div)+"K ");
+
+        }else if(model.getLikesCount() >= 1000)
+        {    double divlike = model.getLikesCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.likes.setText(precision.format(divlike)+"K ");
+
+        }else if (model.getCommentCount() >=1000){
+            double divcomment = model.getCommentCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.0");
+            holder.comment.setText(precision.format(divcomment)+"K ");
+
+        }else {
+            holder.viewCount.setText(model.getViewsCount()+"");
+            holder.comment.setText(model.getCommentCount()+"");
+            holder.likes.setText(model.getLikesCount()+"");
+        }
 
         Picasso.get().load(model.getNews_image()).fit().into(holder.homeNewsImage);
 

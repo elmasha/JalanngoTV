@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_margin="3dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
     android:layout_height="wrap_content">
@@ -14,89 +13,97 @@
         <RelativeLayout
             android:id="@+id/r44"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="180dp">
 
                 <ImageView
                     android:id="@+id/news_image"
-                    android:layout_width="340dp"
-                    android:alpha="2"
-                    android:layout_height="200dp"/>
-
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"/>
 
             <TextView
-                android:id="@+id/news_headline"
-                android:layout_width="370dp"
-                android:layout_height="wrap_content"
-                android:text="Headlines"
-                android:background="@drawable/bglatest"
-                android:padding="8dp"
-                android:maxLines="3"
+                android:layout_width="wrap_content"
+                android:id="@+id/latest_view_category"
+                android:text=" 0 "
                 android:textStyle="bold"
-                android:ellipsize="end"
-                android:textColor="@color/white"
-                android:textSize="19dp"
-                />
+                android:textSize="17dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/bgcat"
+                android:textColor="@color/orange"
+                android:layout_height="wrap_content"
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/bglatest"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/latest_view_comment"
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:drawableLeft="@drawable/commentwhite"
-                    android:text=" 0 "
-                    android:textColor="@color/orange"
-                    android:layout_height="wrap_content"/>
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/latest_view_comment"
+                        android:layout_width="wrap_content"
+                        android:drawableLeft="@drawable/commentwhite"
+                        android:text=" 0 "
+                        android:textColor="@color/orange"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/latest_view_likes"
+                        android:text=" 0 "
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/orange"
+                        android:drawableLeft="@drawable/likeswhite"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/latest_view_views"
+                        android:text=" 0 "
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/orange"
+                        android:drawableLeft="@drawable/eye"
+                        android:drawableTint="@color/white"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp" />
+
+
+
+                    <TextView
+                        android:id="@+id/news_story"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:text="story"
+                        android:visibility="gone"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/lightgray"
+                        android:textSize="15dp"
+                        />
+
+
+                </LinearLayout>
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/latest_view_likes"
-                    android:text=" 0 "
-                    android:layout_marginStart="6dp"
-                    android:textColor="@color/orange"
-                    android:drawableLeft="@drawable/likeswhite"
+                    android:id="@+id/news_headline"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/latest_view_views"
-                    android:text=" 0 "
-                    android:layout_marginStart="6dp"
-                    android:textColor="@color/orange"
-                    android:drawableLeft="@drawable/eye"
-                    android:drawableTint="@color/white"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/latest_view_category"
-                    android:text=" 0 "
+                    android:text="Headlines"
+                    android:maxLines="3"
                     android:textStyle="bold"
-                    android:textSize="17dp"
-                    android:layout_marginStart="60dp"
-                    android:textColor="@color/orange"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="60dp" />
-
-                <TextView
-                    android:id="@+id/news_story"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:text="story"
-                    android:visibility="gone"
-                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:textColor="@color/lightgray"
-                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
                     />
-
-
 
 
             </LinearLayout>

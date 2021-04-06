@@ -9,7 +9,6 @@
 
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:padding="8dp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,8 +28,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:drawableLeft="@drawable/ic_trending"
-                android:text="Latest stories"
-                android:textSize="17dp"
+                android:text="Popular stories"
+                android:textSize="18dp"
                 android:drawableTint="@color/lightgray"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/lightgray"
@@ -59,7 +58,7 @@
                 android:id="@+id/slider"
                 android:layout_width="340dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 app:sliderAnimationDuration="600"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderIndicatorEnabled="false"
@@ -67,33 +66,41 @@
                 app:sliderScrollTimeInSec="2" />
 
 
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:layout_marginTop="10dp"
+                android:padding="4dp"
+                android:id="@+id/Recyclerview_news"/>
+
+
             <TextView
                 android:id="@+id/hot_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="More stories"
+                android:text="Today stories"
                 android:textSize="16dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/lightgray"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp" />
 
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/Recyclerview_news"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:padding="5dp"
                 android:layout_marginBottom="60dp"
-                android:layout_height="match_parent"
-                />
+                android:layout_marginTop="10dp"
+                android:id="@+id/Recyclerview_moreNews"/>
 
 
         </LinearLayout>
 
-
-
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
-
 
 
 </RelativeLayout>

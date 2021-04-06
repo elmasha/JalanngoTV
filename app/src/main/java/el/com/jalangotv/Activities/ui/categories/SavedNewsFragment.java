@@ -133,6 +133,6 @@ View root;
     @Override
     public void onStart() {
         super.onStart();
-        FetchNews();
+      //  FetchNews();
     }
 }
