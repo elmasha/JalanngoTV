@@ -9,14 +9,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import el.com.jalangotv.Activities.ui.categories.SavedNewsFragment;
 import el.com.jalangotv.Activities.ui.home.HomeFragment;
 import el.com.jalangotv.Activities.ui.profile.ProfileFragment;
@@ -33,6 +39,7 @@ import el.com.jalangotv.Adapters.CategoryAdapter;
 import el.com.jalangotv.Fragment.ViewCategoryFragment;
 import el.com.jalangotv.R;
 import el.com.jalangotv.models.Category;
+import el.com.jalangotv.models.JtvUsers;
 
 public class DashboardActivity extends AppCompatActivity {
     //----Initiate Bottom navigation----
@@ -49,6 +56,9 @@ public class DashboardActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference categoryRef = db.collection("Category");
+    CollectionReference JTvUserRef = db.collection("JtvUsers");
+    private CircleImageView profileImage;
+    private FirebaseAuth mAuth;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -90,6 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        mAuth = FirebaseAuth.getInstance();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new
                 HomeFragment()).commit();
@@ -100,6 +111,7 @@ public class DashboardActivity extends AppCompatActivity {
         logoLayout = findViewById(R.id.layout_logo);
         CategoryRecyclerView = findViewById(R.id.Recyclerview_category);
         layoutCategory= findViewById(R.id.layout_category);
+        profileImage = findViewById(R.id.home_profileImage);
         logoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,6 +191,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FetchCategory();
+        LoadDetails();
     }
 
     @Override
@@ -203,4 +216,36 @@ public class DashboardActivity extends AppCompatActivity {
         backPressedTime = System.currentTimeMillis();
     }
 
+
+    private String usename, email, profile;
+    void LoadDetails() {
+
+        String uid = mAuth.getCurrentUser().getUid();
+        JTvUserRef.document(uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
+                                @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+                if (documentSnapshot.exists()) {
+                    JtvUsers users = documentSnapshot.toObject(JtvUsers.class);
+                    usename = users.getUserName();
+                    email = users.getEmail();
+                    profile = users.getProfileImage();
+                    if (profile != null) {
+                        Picasso.get().load(profile).fit().into(profileImage);
+                    }
+
+
+                } else {
+
+                }
+
+
+            }
+        });
+
+
+    }
 }

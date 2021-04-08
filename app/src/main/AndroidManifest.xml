@@ -3,13 +3,11 @@
     package="el.com.jalangotv">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <!--Permissions for internet-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- Permissions for internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 
     <application
         android:allowBackup="true"
@@ -18,6 +16,8 @@
         android:roundIcon="@drawable/jtvlogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.JalangTv">
+        <activity android:name=".Activities.RegisterActivity"></activity>
+        <activity android:name=".Activities.LogInActivity" />
         <activity
             android:name=".Activities.DashboardActivity"
             android:label="@string/title_activity_dashboard" />
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewNewsActivity"></activity>
+        <activity android:name=".ViewNewsActivity" />
     </application>
 
 </manifest>

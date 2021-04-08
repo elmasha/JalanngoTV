@@ -3,7 +3,7 @@ package el.com.jalangotv.models;
 import java.util.Date;
 
 public class Comments {
-    private String userImage,userName,comment;
+    private String userImage,userName,comment,image;
     private long likeCount;
     private Date timestamp;
 
@@ -11,14 +11,15 @@ public class Comments {
     //empty constructor
     }
 
-    public Comments(String userImage, String userName,
-                    String comment, long likeCount, Date timestamp) {
+    public Comments(String userImage, String userName, String comment, String image, long likeCount, Date timestamp) {
         this.userImage = userImage;
         this.userName = userName;
         this.comment = comment;
+        this.image = image;
         this.likeCount = likeCount;
         this.timestamp = timestamp;
     }
+
 
     public String getUserImage() {
         return userImage;
@@ -42,6 +43,14 @@ public class Comments {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public long getLikeCount() {
