@@ -2,6 +2,7 @@ package el.com.jalangotv.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +46,7 @@ public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, Category
         holder.headline.setText(model.getHeadline());
         holder.story.setText(model.getStory());
         holder.category.setText(model.getCategory());
-        holder.likeCount.setText(model.getLikesCount()+"");
-        holder.viewsCount.setText(model.getViewsCount()+"");
-        holder.commentCount.setText(model.getCommentCount()+"");
+
 
         Picasso.get().load(model.getNews_image()).fit().into(holder.homeNewsImage);
 
@@ -55,8 +54,27 @@ public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, Category
 //        String date = DateFormat.format("dd-MMM-yyyy | hh:mm a",new Date(milisecond)).toString();
 //
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        holder.date.setText(getTimeAgo(model.getTimestamp().getTime()));
+        holder.date.setText(getTimeAgo(milisecond)+"");
+        if(model.getViewsCount() >= 1000){
+            DecimalFormat precision = new DecimalFormat("0.00");
+            double div = model.getViewsCount() /1000;
+            holder.viewsCount.setText(precision.format(div)+"K ");
 
+        }else if(model.getLikesCount() >= 1000)
+        {    double divlike = model.getLikesCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.00");
+            holder.likeCount.setText(precision.format(divlike)+"K ");
+
+        }else if (model.getCommentCount() >=1000){
+            double divcomment = model.getCommentCount() /1000;
+            DecimalFormat precision = new DecimalFormat("0.00");
+            holder.commentCount.setText(precision.format(divcomment)+"K ");
+
+        }else {
+            holder.viewsCount.setText(model.getViewsCount()+"");
+            holder.commentCount.setText(model.getCommentCount()+"");
+            holder.likeCount.setText(model.getLikesCount()+"");
+        }
 
 
 
@@ -133,73 +151,75 @@ public class CategoryNewsAdapter extends FirestoreRecyclerAdapter<News, Category
     }
 
 
-    public static String getTimeAgo(long timestamp) {
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+    private static final int WEEK_MILLIS = 7 * DAY_MILLIS ;
 
-        Calendar cal = Calendar.getInstance();
-        TimeZone tz = cal.getTimeZone();//get your local time zone.
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-        sdf.setTimeZone(tz);//set time zone.
-        String localTime = sdf.format(new Date(timestamp * 1000));
-        Date date = new Date();
-        try {
-            date = sdf.parse(localTime);//get local date
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public static String getTimeAgo(long time) {
+
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+        long now =System.currentTimeMillis();;
+
+        long diff = now - time;
+        if(diff>0) {
+
+            if (diff < MINUTE_MILLIS) {
+                return "just now";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute ago";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes ago";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour ago";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " hours ago";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "yesterday";
+            } else if (diff < 7 * DAY_MILLIS) {
+                return diff / DAY_MILLIS + " days ago";
+            } else if (diff < 2 * WEEK_MILLIS) {
+                return "1 week ago";
+            } else if (diff < WEEK_MILLIS * 3) {
+                return diff / WEEK_MILLIS + " weeks ago";
+            } else {
+                java.util.Date date = new java.util.Date((long) time);
+                return date.toString();
+            }
+
+        }
+        else {
+
+            diff=time-now;
+            if (diff < MINUTE_MILLIS) {
+                return "this minute";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute later";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes later";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour later";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " hours later";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "tomorrow";
+            } else if (diff < 7 * DAY_MILLIS) {
+                return diff / DAY_MILLIS + " days later";
+            } else if (diff < 2 * WEEK_MILLIS) {
+                return "a week later";
+            } else if (diff < WEEK_MILLIS * 3) {
+                return diff / WEEK_MILLIS + " weeks later";
+            } else {
+                java.util.Date date = new java.util.Date((long) time);
+                return date.toString();
+            }
         }
 
-        if(date == null) {
-            return null;
-        }
-
-        long time = date.getTime();
-
-        Date curDate = currentDate();
-        long now = curDate.getTime();
-        if (time > now || time <= 0) {
-            return null;
-        }
-
-        int timeDIM = getTimeDistanceInMinutes(time);
-
-        String timeAgo = null;
-
-        if (timeDIM == 0) {
-            timeAgo = "less than a minute";
-        } else if (timeDIM == 1) {
-            return "1 minute";
-        } else if (timeDIM >= 2 && timeDIM <= 44) {
-            timeAgo = timeDIM + " minutes";
-        } else if (timeDIM >= 45 && timeDIM <= 89) {
-            timeAgo = "about an hour";
-        } else if (timeDIM >= 90 && timeDIM <= 1439) {
-            timeAgo = "about " + (Math.round(timeDIM / 60)) + " hours";
-        } else if (timeDIM >= 1440 && timeDIM <= 2519) {
-            timeAgo = "1 day";
-        } else if (timeDIM >= 2520 && timeDIM <= 43199) {
-            timeAgo = (Math.round(timeDIM / 1440)) + " days";
-        } else if (timeDIM >= 43200 && timeDIM <= 86399) {
-            timeAgo = "about a month";
-        } else if (timeDIM >= 86400 && timeDIM <= 525599) {
-            timeAgo = (Math.round(timeDIM / 43200)) + " months";
-        } else if (timeDIM >= 525600 && timeDIM <= 655199) {
-            timeAgo = "about a year";
-        } else if (timeDIM >= 655200 && timeDIM <= 914399) {
-            timeAgo = "over a year";
-        } else if (timeDIM >= 914400 && timeDIM <= 1051199) {
-            timeAgo = "almost 2 years";
-        } else {
-            timeAgo = "about " + (Math.round(timeDIM / 525600)) + " years";
-        }
-        return timeAgo + " ago";
     }
 
-    public static Date currentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTime();
-    }
 
-    private static int getTimeDistanceInMinutes(long time) {
-        long timeDistance = currentDate().getTime() - time;
-        return Math.round((Math.abs(timeDistance) / 1000) / 60);
-    }
 }

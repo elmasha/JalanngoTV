@@ -17,7 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -32,6 +38,7 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
 
     private OnItemCickListener listener;
     public Context context;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     public SavedAdapter(@NonNull FirestoreRecyclerOptions<News>options) {
@@ -108,6 +115,16 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
 
 
 
+            likes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+//                        News news = documentSnapshot.toObject(News.class);
+                    }
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -139,74 +156,40 @@ public class SavedAdapter extends FirestoreRecyclerAdapter<News, SavedAdapter.Ne
     }
 
 
+    //----Views count
+    private void likesCount(String doc_Id){
 
-    public static String getlongtoago(long createdAt) {
-        DateFormat userDateFormat = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-        DateFormat dateFormatNeeded = new SimpleDateFormat("MM/dd/yyyy HH:MM:SS");
-        Date date = null;
-        date = new Date(createdAt);
-        String crdate1 = dateFormatNeeded.format(date);
+        final DocumentReference sfDocRef = db.collection("News").document(doc_Id);
 
-        // Date Calculation
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        crdate1 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(date);
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(sfDocRef);
 
-        // get current date time with Calendar()
-        Calendar cal = Calendar.getInstance();
-        String currenttime = dateFormat.format(cal.getTime());
+                // Note: this could be done without a transaction
+                //       by updating the population using FieldValue.increment()
+                double newPopulation = snapshot.getLong("likesCount") + 1;
+                transaction.update(sfDocRef, "likesCount", newPopulation);
 
-        Date CreatedAt = null;
-        Date current = null;
-        try {
-            CreatedAt = dateFormat.parse(crdate1);
-            current = dateFormat.parse(currenttime);
-        } catch (java.text.ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        // Get msec from each, and subtract.
-        long diff = current.getTime() - CreatedAt.getTime();
-        long diffSeconds = diff / 1000;
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000) % 24;
-        long diffDays = diff / (24 * 60 * 60 * 1000);
-
-        String time = null;
-        if (diffDays > 0) {
-            if (diffDays == 1) {
-                time = diffDays + " day ago ";
-            }else if  (diffDays >= 7) {
-
-                time = diffDays + "week ago ";
-            }else {
-                time = diffDays + " days ago ";
+                // Success
+                return null;
             }
-        } else {
-            if (diffHours > 0) {
-                if (diffHours == 1) {
-                    time = diffHours + " hr ago";
-                } else {
-                    time = diffHours + " hrs ago";
-                }
-            } else {
-                if (diffMinutes > 0) {
-                    if (diffMinutes == 1) {
-                        time = diffMinutes + " min ago";
-                    } else {
-                        time = diffMinutes + " mins ago";
-                    }
-                } else {
-                    if (diffSeconds > 0) {
-                        time = diffSeconds + " secs ago";
-                    }
-                }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
 
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-        }
-        return time;
+            }
+        });
+
     }
+    ///___end likes
+
+
 
 
     private static final int SECOND_MILLIS = 1000;

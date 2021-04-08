@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,6 +63,8 @@ public class ViewNewsActivity extends AppCompatActivity {
     private String story_ID;
     private RecyclerView recyclerView;
     private CommentsAdapter adapter;
+    private AdView adView;
+    AdRequest adRequest;
 
     @Override
     protected void onStart() {
@@ -83,6 +87,9 @@ public class ViewNewsActivity extends AppCompatActivity {
         commentCount = findViewById(R.id.comment_view_count);
         viewsCount = findViewById(R.id.eye_view_count);
         recyclerView = findViewById(R.id.commentView_Recycler);
+        adView = (AdView) findViewById(R.id.adView2);
+        adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         Bundle extra = getIntent().getExtras();
 
         if (extra != null){ Doc_Id = extra.getString("doc_ID"); }
@@ -318,6 +325,32 @@ public class ViewNewsActivity extends AppCompatActivity {
         }
 
     }
+
+
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
 
 
 }

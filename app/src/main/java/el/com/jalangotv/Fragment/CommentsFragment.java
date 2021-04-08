@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ybq.android.spinkit.style.Wave;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,7 +61,8 @@ View root;
     private RecyclerView recyclerView;
     private CommentsAdapter adapter;
     private ProgressBar progressBar;
-
+    private AdView adView;
+    AdRequest adRequest;
 
     public CommentsFragment() {
         // Required empty public constructor
@@ -84,7 +87,9 @@ View root;
         ViewNewsActivity activity = (ViewNewsActivity) getActivity();
         Bundle results = activity.getMyData();
         Doc_ID = results.getString("val1");
-
+        adView = (AdView) root.findViewById(R.id.adView);
+        adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
 
         closeComment.setOnClickListener(new View.OnClickListener() {
@@ -267,6 +272,31 @@ View root;
     public void onStart() {
         super.onStart();
         FetchComments();
+    }
+
+
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 
 

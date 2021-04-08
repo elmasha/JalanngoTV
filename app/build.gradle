@@ -1,6 +1,4 @@
-plugins {
-    id 'com.android.application'
-}
+plugins {id 'com.android.application'}
 apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
@@ -48,6 +46,8 @@ dependencies {
     //---FireBaseCore ---
     //---FirebaseAuth
     implementation 'com.google.firebase:firebase-auth:15.0.0'
+
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
 
     //SpinKit
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'

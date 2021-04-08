@@ -57,18 +57,18 @@ public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.News
         holder.category.setText(model.getCategory());
 
         if(model.getViewsCount() >= 1000){
+            DecimalFormat precision = new DecimalFormat("0.00");
             double div = model.getViewsCount() /1000;
-            DecimalFormat precision = new DecimalFormat("0.0");
             holder.viewCount.setText(precision.format(div)+"K ");
 
         }else if(model.getLikesCount() >= 1000)
         {    double divlike = model.getLikesCount() /1000;
-            DecimalFormat precision = new DecimalFormat("0.0");
+            DecimalFormat precision = new DecimalFormat("0.00");
             holder.likes.setText(precision.format(divlike)+"K ");
 
         }else if (model.getCommentCount() >=1000){
             double divcomment = model.getCommentCount() /1000;
-            DecimalFormat precision = new DecimalFormat("0.0");
+            DecimalFormat precision = new DecimalFormat("0.00");
             holder.comment.setText(precision.format(divcomment)+"K ");
 
         }else {

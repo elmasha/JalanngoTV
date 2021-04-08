@@ -81,9 +81,9 @@ public class AddNewsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-                        .setMinCropResultSize(1000, 200)
+                        .setMinCropResultSize(1100, 600)
                         .setAspectRatio(1, 1)
-                        .setRequestedSize(1000,200)
+                        .setRequestedSize(1200, 628)
                         .start(AddNewsActivity.this);
             }
         });
@@ -139,8 +139,8 @@ public class AddNewsActivity extends AppCompatActivity {
             String Category = category.getSelectedItem().toString();
             try {
                 Compressor compressor = new Compressor(this);
-                compressor.setMaxHeight(1000);
-                compressor.setMaxWidth(200);
+                compressor.setMaxHeight(1200);
+                compressor.setMaxWidth(628);
                 compressor.setQuality(6);
                 compressedImageBitmap = compressor.compressToBitmap(newimage);
 
