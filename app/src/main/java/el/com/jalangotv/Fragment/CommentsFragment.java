@@ -211,8 +211,8 @@ View root;
     private void AddComment() {
 
         HashMap<String ,Object> hashMap = new HashMap<>();
-        hashMap.put("userImage",null);
-        hashMap.put("userName","Elmasha");
+        hashMap.put("image",profile);
+        hashMap.put("userName",usename);
         hashMap.put("comment",InputComment.getEditText().getText().toString());
         hashMap.put("likeCount",0);
         hashMap.put("timestamp", FieldValue.serverTimestamp());

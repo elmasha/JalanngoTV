@@ -49,8 +49,9 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comments, Comments
         }
 
         holder.comment.setText(model.getComment());
-        //Picasso.get().load(model.getUserImage()).fit().into(holder.userImage);
-
+        if (model.getImage() != null) {
+            Picasso.get().load(model.getImage()).fit().placeholder(R.drawable.profilepic).into(holder.userImage);
+        }
 
         if (model.getTimestamp()!=null) {
             long milisecond = model.getTimestamp().getTime();

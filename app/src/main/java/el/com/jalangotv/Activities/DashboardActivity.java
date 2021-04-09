@@ -108,6 +108,9 @@ public class DashboardActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
+        if (mAuth.getCurrentUser().getUid() != null){
+            LoadDetails();
+        }
         logoLayout = findViewById(R.id.layout_logo);
         CategoryRecyclerView = findViewById(R.id.Recyclerview_category);
         layoutCategory= findViewById(R.id.layout_category);
@@ -191,7 +194,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FetchCategory();
-        LoadDetails();
+
+
     }
 
     @Override
@@ -221,6 +225,7 @@ public class DashboardActivity extends AppCompatActivity {
     void LoadDetails() {
 
         String uid = mAuth.getCurrentUser().getUid();
+
         JTvUserRef.document(uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,

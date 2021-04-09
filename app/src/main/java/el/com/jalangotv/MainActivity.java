@@ -10,17 +10,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import el.com.jalangotv.Activities.DashboardActivity;
+import el.com.jalangotv.Activities.LogInActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView iv;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mAuth = FirebaseAuth.getInstance();
         iv = findViewById(R.id.iv);
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.myanim);
 
@@ -34,8 +37,18 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
 
-                        startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+                    FirebaseUser current_User = mAuth.getCurrentUser();
+                    String UiD = mAuth.getUid();
 
+                    if (current_User != null)
+                    {
+                        if (UiD != null){
+                            startActivity(new Intent(getApplicationContext(),DashboardActivity.class));
+                        }
+
+                    }else {
+                        startActivity(new Intent(MainActivity.this, LogInActivity.class));
+                    }
                 }
             }
 

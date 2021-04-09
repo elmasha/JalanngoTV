@@ -1,8 +1,10 @@
 package el.com.jalangotv.Activities.ui.profile;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.text.method.ScrollingMovementMethod;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import el.com.jalangotv.Activities.LogInActivity;
 import el.com.jalangotv.Activities.RegisterActivity;
 import el.com.jalangotv.R;
 import el.com.jalangotv.models.JtvUsers;
@@ -30,9 +33,10 @@ public class ProfileFragment extends Fragment {
 View root;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference JTvUserRef = db.collection("JtvUsers");
-    private TextView profileUsername,profileEmail;
+    private TextView profileUsername,profileEmail,logOut;
     private CircleImageView profileImage;
     private FirebaseAuth mAuth;
+    private AlertDialog dialog2;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -48,6 +52,35 @@ View root;
         profileUsername = root.findViewById(R.id.Profile_userName);
         profileEmail = root.findViewById(R.id.Profile_email);
         profileImage = root.findViewById(R.id.profileImage);
+        logOut = root.findViewById(R.id.logOut);
+
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                dialog2 = builder.create();
+                dialog2.show();
+                builder.setMessage("Are you sure to Log out..\n");
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Log_out();
+
+                            }
+                        });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog2.dismiss();
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+
+
+            }
+        });
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +90,14 @@ View root;
 
         LoadDetails();
     return  root;
+    }
+
+    private void Log_out() {
+        mAuth.signOut();
+        Intent logout = new Intent(getContext(),LogInActivity.class);
+        logout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(logout);
+
     }
 
     private String usename, email, profile;
