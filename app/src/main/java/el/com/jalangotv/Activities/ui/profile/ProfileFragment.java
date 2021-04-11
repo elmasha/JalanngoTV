@@ -2,6 +2,7 @@ package el.com.jalangotv.Activities.ui.profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,7 @@ View root;
     private CircleImageView profileImage;
     private FirebaseAuth mAuth;
     private AlertDialog dialog2;
+    private LinearLayout youtube,instaGram,twitter,facebook;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -53,7 +56,38 @@ View root;
         profileEmail = root.findViewById(R.id.Profile_email);
         profileImage = root.findViewById(R.id.profileImage);
         logOut = root.findViewById(R.id.logOut);
+        youtube = root.findViewById(R.id.youtube);
+        instaGram = root.findViewById(R.id.instagram);
+        twitter = root.findViewById(R.id.twitter);
+        facebook = root.findViewById(R.id.facebook);
 
+
+        youtube.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToURL("https://www.youtube.com/results?search_query=jalango+tv");
+            }
+        });
+
+        instaGram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToURL("https://www.instagram.com/jalangoo/?hl=en");
+            }
+        });
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToURL("https://twitter.com/ThisIsJalas");
+            }
+        });
+
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToURL("https://www.facebook.com/OfficialJalangoTV");
+            }
+        });
 
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +112,6 @@ View root;
                 builder.setCancelable(false);
                 builder.show();
 
-
             }
         });
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +124,14 @@ View root;
         LoadDetails();
     return  root;
     }
+
+
+    void GoToURL(String url){
+        Uri uri = Uri.parse(url);
+        Intent intent= new Intent(Intent.ACTION_VIEW,uri);
+        startActivity(intent);
+    }
+
 
     private void Log_out() {
         mAuth.signOut();

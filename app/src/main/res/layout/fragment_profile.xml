@@ -94,6 +94,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/youtube"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="15dp"
@@ -107,6 +108,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/facebook"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="15dp"
@@ -120,6 +122,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/instagram"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="15dp"
@@ -133,6 +136,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/twitter"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="15dp"

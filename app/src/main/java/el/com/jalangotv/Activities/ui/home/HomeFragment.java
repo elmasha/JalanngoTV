@@ -315,7 +315,7 @@ public class HomeFragment extends Fragment {
                     toVendorPref.putExtra("Image",image);
                     toVendorPref.putExtra("doc_ID",doc_id);
                     startActivity(toVendorPref);
-                    //viewsCount(doc_id);
+                    viewsCount(doc_id);
                 }
             }
         });
@@ -394,8 +394,6 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
-
 
 
     @Override

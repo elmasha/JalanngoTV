@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,6 +41,7 @@ import el.com.jalangotv.R;
 import id.zelory.compressor.Compressor;
 
 import static com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE;
+import static com.theartofdev.edmodo.cropper.CropImage.activity;
 
 
 public class AddNewsActivity extends AppCompatActivity {
@@ -48,7 +50,7 @@ public class AddNewsActivity extends AppCompatActivity {
     private Spinner category;
     private Button Add_new;
     private ImageView Photo;
-    private Uri imageUri;
+    private Uri imageUri,imageUri2;
     private FirebaseAuth mAuth;
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -85,6 +87,8 @@ public class AddNewsActivity extends AppCompatActivity {
                         .setAspectRatio(1, 1)
                         .setRequestedSize(1200, 628)
                         .start(AddNewsActivity.this);
+
+
             }
         });
 
@@ -109,14 +113,13 @@ public class AddNewsActivity extends AppCompatActivity {
             switch (requestCode) {
                 case CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                     CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
                     //data.getData returns the content URI for the selected Image
-
                     imageUri = result.getUri();
                     Photo.setImageURI(imageUri);
 
                     break;
             }
+
     }
 
     private void UploadNews() {

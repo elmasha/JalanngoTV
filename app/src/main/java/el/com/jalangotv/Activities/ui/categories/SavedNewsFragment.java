@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,6 +49,8 @@ View root;
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_category, container, false);
         SavedRecyclerView = root.findViewById(R.id.Recyclerview_saved);
+        WebView webView = root.findViewById(R.id.WebView);
+        webView.loadUrl("https://www.youtube.com/results?search_query=jalango+tv");
 
         return  root;
     }

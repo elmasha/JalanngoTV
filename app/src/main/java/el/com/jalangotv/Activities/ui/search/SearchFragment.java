@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,8 @@ View root;
     private RecyclerView SearchRecyclerView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference NewsRef = db.collection("News");
+    private AdView adView;
+    AdRequest adRequest;
 
 
 
@@ -44,6 +48,10 @@ View root;
                              ViewGroup container, Bundle savedInstanceState) {
          root = inflater.inflate(R.layout.fragment_search, container, false);
          SearchRecyclerView = root.findViewById(R.id.Recyclerview_search);
+        adView = (AdView) root.findViewById(R.id.adView3);
+        adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
          FetchNews();
         return root;
     }

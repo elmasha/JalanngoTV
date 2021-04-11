@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -108,9 +107,14 @@ public class DashboardActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
-        if (mAuth.getCurrentUser().getUid() != null){
-            LoadDetails();
+        if (mAuth.getCurrentUser() != null){
+            if (mAuth.getCurrentUser().getUid() != null){
+                LoadDetails();
+            }
+        }else {
+
         }
+
         logoLayout = findViewById(R.id.layout_logo);
         CategoryRecyclerView = findViewById(R.id.Recyclerview_category);
         layoutCategory= findViewById(R.id.layout_category);
@@ -180,8 +184,6 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-
-
     }
     //...end fetch..
     public Bundle getMyData() {
@@ -190,13 +192,47 @@ public class DashboardActivity extends AppCompatActivity {
         return hm;
     }
 
+
+    private String username, email, profile;
+    void LoadDetails() {
+
+        String uid = mAuth.getCurrentUser().getUid();
+
+        JTvUserRef.document(uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
+                                @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+                if (documentSnapshot.exists()) {
+                    JtvUsers users = documentSnapshot.toObject(JtvUsers.class);
+                    username = users.getUserName();
+                    email = users.getEmail();
+                    profile = users.getProfileImage();
+                    if (profile != null) {
+                        Picasso.get().load(profile).fit().into(profileImage);
+                    }
+
+
+                } else {
+
+                }
+
+
+            }
+        });
+
+
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
         FetchCategory();
-
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -220,37 +256,4 @@ public class DashboardActivity extends AppCompatActivity {
         backPressedTime = System.currentTimeMillis();
     }
 
-
-    private String usename, email, profile;
-    void LoadDetails() {
-
-        String uid = mAuth.getCurrentUser().getUid();
-
-        JTvUserRef.document(uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot,
-                                @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    return;
-                }
-                if (documentSnapshot.exists()) {
-                    JtvUsers users = documentSnapshot.toObject(JtvUsers.class);
-                    usename = users.getUserName();
-                    email = users.getEmail();
-                    profile = users.getProfileImage();
-                    if (profile != null) {
-                        Picasso.get().load(profile).fit().into(profileImage);
-                    }
-
-
-                } else {
-
-                }
-
-
-            }
-        });
-
-
-    }
 }

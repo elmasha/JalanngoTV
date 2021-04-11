@@ -9,19 +9,30 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,6 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
     CollectionReference JTvUserRef = db.collection("JtvUsers");
     private UploadTask uploadTask;
     ProgressDialog progressDialog;
+    private CallbackManager mCallbackManager;
+    private LoginButton loginButton;
 
 
     @Override
@@ -75,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.user_image);
         btnRegister = findViewById(R.id.BtnRegister);
         to_login = findViewById(R.id.to_logIn);
+        loginButton = findViewById(R.id.button_sign_in);
 
 
 
@@ -106,6 +120,71 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+
+        // Initialize Facebook Login button
+        mCallbackManager = CallbackManager.Factory.create();
+
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
+// ...
+
+    }
+
+    private void handleFacebookAccessToken(AccessToken accessToken) {
+
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String uid = mAuth.getCurrentUser().getUid();
+                            updateUI(user.getPhotoUrl(),user.getDisplayName(),uid);
+                        } else {
+                            // If sign in fails, display a message to the user.
+
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(Uri photoUrl, String displayName,String uid) {
+
+        HashMap<String, Object> store = new HashMap<>();
+        store.put("UserName", displayName);
+        store.put("Email", "facebook");
+        store.put("ProfileImage", photoUrl);
+        store.put("timestamp", FieldValue.serverTimestamp());
+        JTvUserRef.document(uid).set(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    startActivity(new Intent(getApplicationContext(),DashboardActivity.class));
+                }else {
+                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void signIn() {
@@ -257,6 +336,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK)
             switch (requestCode) {
                 case CROP_IMAGE_ACTIVITY_REQUEST_CODE:

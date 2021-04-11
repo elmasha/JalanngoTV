@@ -19,7 +19,7 @@
             <ImageView
                 android:id="@+id/search_image"
                 android:layout_width="100dp"
-                android:layout_height="100dp"/>
+                android:layout_height="90dp"/>
 
 
             <LinearLayout
@@ -43,8 +43,8 @@
                     android:id="@+id/search_story"
                     android:layout_width="250dp"
                     android:ellipsize="end"
-                    android:maxLines="4"
-                    android:minLines="3"
+                    android:maxLines="3"
+                    android:minLines="2"
                     android:text="TextView"
                     android:textColor="@color/lightgray"
                     android:layout_height="wrap_content"/>
