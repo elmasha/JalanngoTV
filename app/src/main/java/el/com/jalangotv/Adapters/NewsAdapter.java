@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,20 +21,13 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.snov.timeagolibrary.PrettyTimeAgo;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import el.com.jalangotv.R;
-import el.com.jalangotv.TimeAgo2;
 import el.com.jalangotv.models.News;
 
 public class NewsAdapter extends FirestoreRecyclerAdapter<News, NewsAdapter.NewsViewHolder> {

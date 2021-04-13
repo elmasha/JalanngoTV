@@ -1,4 +1,4 @@
-package el.com.jalangotv.Activities.ui.profile;
+package el.com.jalangotv.Fragment.ui.profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import el.com.jalangotv.Activities.LogInActivity;
 import el.com.jalangotv.Activities.RegisterActivity;
 import el.com.jalangotv.R;
 import el.com.jalangotv.models.JtvUsers;
-import el.com.jalangotv.models.News;
 
 
 public class ProfileFragment extends Fragment {

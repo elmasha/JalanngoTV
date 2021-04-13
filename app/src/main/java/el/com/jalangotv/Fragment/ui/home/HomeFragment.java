@@ -1,4 +1,4 @@
-package el.com.jalangotv.Activities.ui.home;
+package el.com.jalangotv.Fragment.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<News> sliderDataArrayList;
     private SliderView sliderView;
     private String Doc_Id,Doc_Id2;
-    ;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:background="@color/blackiie"
     android:layout_height="match_parent"
-    tools:context=".Activities.ui.profile.ProfileFragment">
+    tools:context=".Fragment.ui.profile.ProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

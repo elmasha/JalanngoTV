@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,15 +35,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
-import el.com.jalangotv.Activities.DashboardActivity;
-import el.com.jalangotv.Activities.ui.home.HomeFragment;
 import el.com.jalangotv.Adapters.CommentsAdapter;
 import el.com.jalangotv.Fragment.CommentsFragment;
-import el.com.jalangotv.Fragment.ViewCategoryFragment;
 import el.com.jalangotv.models.Comments;
 import el.com.jalangotv.models.News;
-
-import static java.security.AccessController.getContext;
 
 
 public class ViewNewsActivity extends AppCompatActivity {

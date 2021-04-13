@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -30,10 +33,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import el.com.jalangotv.Activities.ui.categories.SavedNewsFragment;
-import el.com.jalangotv.Activities.ui.home.HomeFragment;
-import el.com.jalangotv.Activities.ui.profile.ProfileFragment;
-import el.com.jalangotv.Activities.ui.search.SearchFragment;
+import el.com.jalangotv.Fragment.ui.savednews.SavedNewsFragment;
+import el.com.jalangotv.Fragment.ui.home.HomeFragment;
+import el.com.jalangotv.Fragment.ui.profile.ProfileFragment;
+import el.com.jalangotv.Fragment.ui.search.SearchFragment;
 import el.com.jalangotv.Adapters.CategoryAdapter;
 import el.com.jalangotv.Fragment.ViewCategoryFragment;
 import el.com.jalangotv.R;
@@ -51,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
     public CategoryAdapter adapter;
     private RecyclerView CategoryRecyclerView;
     int PERMISSION_ALL = 1;
+    InterstitialAd mInterstitialAd;
     String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS,Manifest.permission.CALL_PHONE,Manifest.permission.READ_EXTERNAL_STORAGE};
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -107,6 +111,19 @@ public class DashboardActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
+
+
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.ad_ID2));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
         if (mAuth.getCurrentUser() != null){
             if (mAuth.getCurrentUser().getUid() != null){
                 LoadDetails();
@@ -129,6 +146,11 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -249,6 +271,11 @@ public class DashboardActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new
                     HomeFragment()).commit();
             layoutCategory.setVisibility(View.VISIBLE);
+            mInterstitialAd.setAdListener(new AdListener() {
+                public void onAdLoaded() {
+                    showInterstitial();
+                }
+            });
             backToast = Toast.makeText(getBaseContext(), "Double tap to exit", Toast.LENGTH_SHORT);
             backToast.show();
         }
