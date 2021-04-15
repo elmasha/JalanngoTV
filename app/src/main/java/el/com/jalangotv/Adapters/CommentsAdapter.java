@@ -59,6 +59,16 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comments, Comments
         }
 
 
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position != RecyclerView.NO_POSITION && listener != null){
+                    listener.onItemClick(getSnapshots().getSnapshot(position),position);
+
+                }
+            }
+        });
+
 
     }
 
@@ -101,7 +111,6 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comments, Comments
 
                     if (position != RecyclerView.NO_POSITION && listener != null){
                         listener.onItemClick(getSnapshots().getSnapshot(position),position);
-
                     }
                 }
             });

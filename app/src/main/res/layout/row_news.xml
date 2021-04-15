@@ -14,11 +14,12 @@
             android:id="@+id/cathome_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-
 
             <LinearLayout
                 android:layout_alignParentBottom="true"
@@ -108,14 +109,14 @@
                     android:layout_marginLeft="8dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/cat_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginLeft="8dp"
                     android:text=""
                     android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:layout_marginStart="13dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,8 +131,6 @@
                     />
 
             </LinearLayout>
-
-
 
         </RelativeLayout>
 

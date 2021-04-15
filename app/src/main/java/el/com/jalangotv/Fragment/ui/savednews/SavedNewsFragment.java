@@ -50,7 +50,7 @@ View root;
         root = inflater.inflate(R.layout.fragment_category, container, false);
         SavedRecyclerView = root.findViewById(R.id.Recyclerview_saved);
         WebView webView = root.findViewById(R.id.WebView);
-        webView.loadUrl("https://www.youtube.com/results?search_query=jalango+tv");
+        webView.loadUrl("https://www.youtube.com");
 
         return  root;
     }
