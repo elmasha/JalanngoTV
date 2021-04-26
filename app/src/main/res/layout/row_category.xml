@@ -39,9 +39,9 @@
                 android:layout_width="20dp"
                 android:background="@color/orange"
                 android:visibility="gone"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_height="3dp"
-                android:layout_marginLeft="8dp" />
+                 />
         </LinearLayout>
 
     </RelativeLayout>

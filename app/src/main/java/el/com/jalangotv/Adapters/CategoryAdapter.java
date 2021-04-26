@@ -72,9 +72,9 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
             Title = itemView.findViewById(R.id.Title);
             imageView = itemView.findViewById(R.id.category_image);
             onView = itemView.findViewById(R.id.onView);
-            Title.setTextColor(ContextCompat.getColor(context,R.color.Catgray));
+            Title.setTextColor(ContextCompat.getColor(context,R.color.gray));
             onView.setVisibility(View.GONE);
-            Title.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     state =1;
@@ -87,11 +87,11 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
                             onView.setVisibility(View.VISIBLE);
 
                         }else if (state ==2 ){
-                            Title.setTextColor(ContextCompat.getColor(context,R.color.Catgray));
+                            Title.setTextColor(ContextCompat.getColor(context,R.color.gray));
                             onView.setVisibility(View.GONE);
                         }
                         else if (state ==0){
-                            Title.setTextColor(ContextCompat.getColor(context,R.color.Catgray));
+                            Title.setTextColor(ContextCompat.getColor(context,R.color.gray));
                             onView.setVisibility(View.GONE);
                         }
 
