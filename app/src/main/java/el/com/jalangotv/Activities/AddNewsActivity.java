@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,6 +47,7 @@ import static com.theartofdev.edmodo.cropper.CropImage.activity;
 
 public class AddNewsActivity extends AppCompatActivity {
 
+    private int PICK_PHOTO = 2000;
     private TextInputLayout headlines,story;
     private Spinner category;
     private Button Add_new;
@@ -81,6 +83,7 @@ public class AddNewsActivity extends AppCompatActivity {
         Photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
                         .setMinCropResultSize(1100, 600)
@@ -96,19 +99,123 @@ public class AddNewsActivity extends AppCompatActivity {
         Add_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                UploadCategories();
                 if (!Validation()){
 
                 }else {
-                    UploadNews();
+//                    UploadNews();
+
+
+
                 }
             }
         });
     }
 
+    private void UploadCategories() {
+
+
+
+        if (imageUri == null){
+
+            Toast.makeText(getApplicationContext(), "No image selected", Toast.LENGTH_SHORT).show();
+
+
+        }else {
+
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Please Wait publishing story..");
+            progressDialog.show();
+
+
+
+            File newimage = new File(imageUri.getPath());
+            String Headlines = headlines.getEditText().getText().toString();
+            String Story = story.getEditText().getText().toString();
+            String Category = category.getSelectedItem().toString();
+            try {
+                Compressor compressor = new Compressor(this);
+                compressor.setMaxHeight(1200);
+                compressor.setMaxWidth(628);
+                compressor.setQuality(6);
+                compressedImageBitmap = compressor.compressToBitmap(newimage);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            compressedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+
+            final StorageReference ref = storageReference.child("images/thumbs" + UUID.randomUUID().toString());
+            uploadTask = ref.putBytes(data);
+
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return ref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()){
+                        Uri downloadUri = task.getResult();
+
+                        String url34 = downloadUri.toString();
+                        Doc_ID = categoryRef.document().getId();
+                        HashMap<String, Object> store = new HashMap<>();
+                        store.put("Title", Category);
+                        store.put("id", Doc_ID);
+                        store.put("Image",url34);
+                        store.put("timestamp", FieldValue.serverTimestamp());
+
+                        categoryRef.document(Doc_ID).set(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+
+                                    Toast.makeText(AddNewsActivity.this, "category Published successfuly", Toast.LENGTH_SHORT).show();
+
+                                }else {
+                                    Toast.makeText(AddNewsActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }else {
+                        Toast.makeText(AddNewsActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddNewsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+        }
+
+
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
+
+
         if (resultCode == RESULT_OK)
             switch (requestCode) {
                 case CROP_IMAGE_ACTIVITY_REQUEST_CODE:

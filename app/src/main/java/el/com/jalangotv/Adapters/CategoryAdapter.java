@@ -6,6 +6,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -38,6 +40,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
     @Override
     protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull Category model) {
         holder.Title.setText(model.getTitle());
+        Picasso.get().load(model.getImage()).centerInside().fit().into(holder.imageView);
 
 
     }
@@ -58,6 +61,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
     class CategoryViewHolder extends RecyclerView.ViewHolder{
        private TextView Title, desc, time;
+       private ImageView imageView;
        private View onView;
        private View view;
 
@@ -66,8 +70,9 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
             super(itemView);
 
             Title = itemView.findViewById(R.id.Title);
+            imageView = itemView.findViewById(R.id.category_image);
             onView = itemView.findViewById(R.id.onView);
-            Title.setTextColor(ContextCompat.getColor(context,R.color.green));
+            Title.setTextColor(ContextCompat.getColor(context,R.color.Catgray));
             onView.setVisibility(View.GONE);
             Title.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,15 +83,15 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
                         listener.onItemClick(getSnapshots().getSnapshot(position),position);
                         if (state == 1){
                             state=2;
-                            Title.setTextColor(ContextCompat.getColor(context,R.color.orange));
+                            Title.setTextColor(ContextCompat.getColor(context,R.color.green));
                             onView.setVisibility(View.VISIBLE);
 
                         }else if (state ==2 ){
-                            Title.setTextColor(ContextCompat.getColor(context,R.color.green));
+                            Title.setTextColor(ContextCompat.getColor(context,R.color.Catgray));
                             onView.setVisibility(View.GONE);
                         }
                         else if (state ==0){
-                            Title.setTextColor(ContextCompat.getColor(context,R.color.green));
+                            Title.setTextColor(ContextCompat.getColor(context,R.color.Catgray));
                             onView.setVisibility(View.GONE);
                         }
 

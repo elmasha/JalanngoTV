@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView app:cardCornerRadius="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:layout_margin="3dp"
     android:background="@color/blackiie"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:orientation="vertical"
+        android:background="@color/blackgrey"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/Title"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:text="Title"
-            android:textColor="#4F5254"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp" />
-        <View
-            android:id="@+id/onView"
-            android:layout_width="20dp"
-            android:background="@color/orange"
-            android:visibility="gone"
-            android:layout_marginStart="8dp"
-            android:layout_height="3dp"
-            android:layout_marginLeft="8dp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/category_image"
+                android:layout_width="38dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="38dp" />
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="80dp"
+                android:text="Title"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="#4F5254"
+                android:textSize="16dp"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <View
+                android:id="@+id/onView"
+                android:layout_width="20dp"
+                android:background="@color/orange"
+                android:visibility="gone"
+                android:layout_marginStart="8dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="8dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+
+</androidx.cardview.widget.CardView>

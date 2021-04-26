@@ -10,33 +10,60 @@
         android:layout_height="wrap_content">
 
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/r44"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="180dp">
+            android:layout_height="110dp">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
 
                 <ImageView
                     android:id="@+id/news_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"/>
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:id="@+id/latest_view_category"
-                android:text=" 0 "
-                android:textStyle="bold"
-                android:textSize="17dp"
-                android:background="@drawable/bgcat"
-                android:textColor="@color/orange"
-                android:layout_height="wrap_content"
-                 />
+
+
+            </RelativeLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/bglatest"
-                android:layout_height="wrap_content">
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    android:id="@+id/news_headline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Headlines"
+                    android:maxLines="2"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/news_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    />
 
 
 
@@ -91,34 +118,21 @@
 
                 </LinearLayout>
 
-
                 <TextView
-                    android:id="@+id/news_headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Headlines"
-                    android:maxLines="3"
-                    android:textStyle="bold"
-                    android:ellipsize="end"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    />
-
-                <TextView
-                    android:id="@+id/news_time"
                     android:layout_width="wrap_content"
+                    android:id="@+id/latest_view_category"
+                    android:text=" 0 "
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textSize="16dp"
+                    android:textColor="@color/orange"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:ellipsize="end"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
                     />
-
 
             </LinearLayout>
 
 
-        </RelativeLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -185,7 +199,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:id="@+id/news_cat"
-                android:text=""
+                android:text="ggggghhhhhhh"
                 android:textColor="@color/gray"
                 android:textSize="16dp"
                 android:layout_marginStart="13dp"

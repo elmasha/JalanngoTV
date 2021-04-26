@@ -9,8 +9,6 @@
     <string name="ad_ID">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_ID2">ca-app-pub-3940256099942544/1033173712</string>
 
-
-
     <string-array name="Category">
         <item>Select category</item>
         <item>LifeStyle</item>
@@ -19,6 +17,10 @@
         <item>Entertainment</item>
         <item>Opinions</item>
         <item>News</item>
+        <item>Sponsored</item>
         <item>Sports</item>
+        <item>Science</item>
+        <item>Counties</item>
+        <item>Updates</item>
     </string-array>
 </resources>

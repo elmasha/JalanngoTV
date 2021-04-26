@@ -136,6 +136,14 @@ public class DashboardActivity extends AppCompatActivity {
         CategoryRecyclerView = findViewById(R.id.Recyclerview_category);
         layoutCategory= findViewById(R.id.layout_category);
         profileImage = findViewById(R.id.home_profileImage);
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), LogInActivity.class));
+            }
+        });
         logoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
